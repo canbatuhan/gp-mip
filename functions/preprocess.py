@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from ..structs import Grid, Sensor
+from structs import Grid, Sensor
 
-def generate_sensors(size:int, sensor_count:int) -> np.ndarray:
+def generate_sensors(size:int, sensor_count:int) -> list:
     """
         Description:
             Generates sensors with random x and y locations
@@ -14,13 +14,46 @@ def generate_sensors(size:int, sensor_count:int) -> np.ndarray:
             - sensor_count : `int`, number of sensors
 
         Return:
-            - `np.ndarray` : array storing the sensor objects
+            - `list` : array storing the sensor objects
     """
-    arr = np.ndarray([], dtype=Sensor)
+    arr = list()
+
     for _ in range(sensor_count):
-        new_sensor = Sensor(np.random.randint(0, size+1), np.random.randint(0, size+1))
-        np.append(arr, new_sensor)
+        new_sensor = Sensor(np.random.randint(0, size), np.random.randint(0, size))
+        arr.append(new_sensor)
+
     return arr
 
-def show_sensor_locations(grid:Grid, sensor:np.ndarray):
-    pass
+
+def record_sensor_locations(sensors:list) -> None:
+    """
+        Description:
+            Records the sensor locations for further use
+
+        Arguments:
+            - sensors : `list`, array storing the sensors
+    """
+    with open('docs/sensor_locations.txt', 'w') as file:
+        for index in range(len(sensors)):
+            file.write(f'Sensor#{index}\tx:{sensors[index].get_x()}\ty:{sensors[index].get_y()}\n')
+
+
+def show_sensor_locations(grid:Grid, sensors:list) -> None:
+    """
+        Description:
+            Visualizes the sensors on the generated grid
+            and saves the figure
+    
+        Arguments:
+            - grid : `Grid`, grid that the sensors are located on
+            - sensors : `list`, array storing the sensors
+    """
+    x_locations = [sensor.get_x() for sensor in sensors]
+    y_locations = [sensor.get_y() for sensor in sensors]
+
+    plt.title("Sensor Locations on Grid")
+    plt.xlim(left=0, right=grid.get_width())
+    plt.ylim(bottom=0, top=grid.get_height())
+    
+    plt.scatter(x_locations, y_locations, color="r", alpha=0.9)
+    plt.savefig('docs/sensor_locations.png')
