@@ -15,8 +15,8 @@ class Grid:
     def get_width(self) -> int:
         return self.__width
 
-    """def get_width_as_range(self) -> int:
+    def get_width_as_range(self) -> int:
         return np.arange(self.__height+1, dtype=np.uint8)
 
     def get_height_as_range(self) -> int:
-        return np.arange(self.__width+1, dtype=np.uint8)"""
+        return np.arange(self.__width+1, dtype=np.uint8)
