@@ -4,6 +4,7 @@ import argparse
 
 from structs import Grid
 from functions import preprocess as pproc
+from functions import clustering
 
 parser = argparse.ArgumentParser(description='ILP Sensor Clustering - Clustering of sensors using Integer Linear Programming concept')
 parser.add_argument('--size', required=False, default=None, type=int)
@@ -18,3 +19,4 @@ if __name__=='__main__':
     sensors = pproc.generate_sensors(GRID_SIZE, SENSOR_COUNT)
     # pproc.record_sensor_locations(sensors)
     # pproc.show_sensor_locations(grid, sensors)
+    model_package = clustering.generate_model(grid, sensors)
