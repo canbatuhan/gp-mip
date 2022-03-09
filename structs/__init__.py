@@ -1,2 +1,2 @@
-from .Grid import Grid
-from .Sensor import Sensor
+from .grid import Grid
+from .sensor import Sensor

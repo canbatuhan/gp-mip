@@ -5,13 +5,13 @@ import mip.constants
 from structs import Grid, Sensor
 
 
-def calculate_distance(point1:set, point2:set) -> float:
+def calculate_distance(point1:tuple, point2:tuple) -> float:
     x1, y1 = point1
     x2, y2 = point2
     return np.sqrt((x1-x2)**2 + (y1-y2)**2)
 
 
-def sensors_covered(gateway_point:set, sensor_set:set, distance_threshold:float) -> set:
+def sensors_covered(gateway_point:tuple, sensor_set:set, distance_threshold:float) -> set:
     covered_sensor_set = set()
     for sensor in sensor_set:
         distance = calculate_distance(gateway_point, (sensor.get_x(), sensor.get_y()))
@@ -57,15 +57,28 @@ def generate_model(grid:Grid, sensor_set:set, distance_threshold:float) -> dict:
         [
             model.add_var(
                 var_type=mip.constants.BINARY
-            ) for y in grid.get_width_as_range()
-        ] for x in grid.get_height_as_range()
+            ) for _ in grid.get_width_as_range()
+        ] for _ in grid.get_height_as_range()
     ]
 
-    # Sending the model and variables as package
-    package = {
-        'model': model,
-        'covered_sensors': covered_sensors,
-        'gateway_locations': gateway_locations,
-    }
+    return model, covered_sensors, gateway_locations
 
-    return package
+
+def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, covered_sensors:list, gateway_locations:list) -> mip.model.Model:
+    model.objective = mip.model.minimize(
+        objective=mip.model.xsum(
+            gateway_locations[row][col] for col in grid.get_width_as_range() for row in grid.get_height_as_range()
+        )
+    )
+
+    model += mip.model.xsum(
+        covered_sensors[row][col] for col in grid.get_width_as_range() for row in grid.get_height_as_range()
+    ) == sensor_set
+
+    return model
+
+
+def optimize_model(model:mip.model.Model, grid:Grid, sensor_set:set, covered_sensors:list, gateway_locations:list) -> mip.model.Model:
+    model.optimize()
+    if model.num_solutions:
+        print("FOUND")

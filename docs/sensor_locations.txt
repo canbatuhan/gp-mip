@@ -1,5 +1,10 @@
-Sensor#0	x:1	y:6
-Sensor#1	x:7	y:4
-Sensor#2	x:2	y:3
-Sensor#3	x:0	y:6
-Sensor#4	x:9	y:5
+Sensor#9	x:81	y:93
+Sensor#5	x:68	y:65
+Sensor#8	x:34	y:98
+Sensor#4	x:16	y:20
+Sensor#6	x:46	y:98
+Sensor#2	x:64	y:79
+Sensor#7	x:24	y:89
+Sensor#3	x:55	y:41
+Sensor#1	x:35	y:59
+Sensor#0	x:24	y:33

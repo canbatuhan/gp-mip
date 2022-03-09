@@ -17,8 +17,33 @@ SENSOR_COUNT = args['sensor_count']
 DISTANCE_THRESHOLD = args['distance_threshold']
 
 if __name__=='__main__':
+    # ___Initialization___
     grid = Grid(GRID_SIZE)
     sensor_set = pproc.generate_sensors(GRID_SIZE, SENSOR_COUNT)
-    #pproc.record_sensor_locations(sensors)
-    #pproc.show_sensor_locations(grid, sensors)
-    model_as_package = clustering.generate_model(grid, sensor_set, DISTANCE_THRESHOLD)
+
+    # ___Visualization___
+    pproc.record_sensor_locations(sensor_set)
+    pproc.show_sensor_locations(grid, sensor_set)
+
+    # ___Building___
+    generated_model, covered_sensors, gateway_locations = clustering.generate_model(
+        grid=grid,
+        sensor_set=sensor_set,
+        distance_threshold=DISTANCE_THRESHOLD
+    )
+
+    developed_model = clustering.develop_model(
+        model=generated_model,
+        grid=grid,
+        sensor_set=sensor_set,
+        covered_sensors=covered_sensors,
+        gateway_locations=gateway_locations
+    )
+
+    optimized_model = clustering.optimize_model(
+        model=developed_model,
+        grid=grid,
+        sensor_set=sensor_set,
+        covered_sensors=covered_sensors,
+        gateway_locations=gateway_locations
+    )

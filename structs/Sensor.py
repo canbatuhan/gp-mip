@@ -6,8 +6,7 @@ class Sensor:
 
     def __str__(self) -> str:
         return "[Sensor#{}; x={}, y{}]".format(
-            self.__id, self.__x, self.__y
-        )
+            self.__id, self.__x, self.__y)
 
     def get_id(self) -> str:
         return self.__id

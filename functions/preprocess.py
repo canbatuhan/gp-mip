@@ -55,6 +55,6 @@ def show_sensor_locations(grid:Grid, sensor_set:set) -> None:
     plt.xlim(left=0, right=grid.get_width())
     plt.ylim(bottom=0, top=grid.get_height())
 
-    plt.grid(b=True, axis='both', )
-    plt.scatter(x_locations, y_locations, color="r", alpha=0.9)
+    plt.grid(b=True, axis='both')
+    plt.scatter(x_locations, y_locations, color='r', alpha=0.9)
     plt.savefig('docs/sensor_locations.png')
