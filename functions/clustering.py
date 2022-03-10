@@ -61,6 +61,7 @@ def generate_model(grid:Grid, sensor_set:set, distance_threshold:float) -> dict:
         ] for _ in grid.get_height_as_range()
     ]
 
+
     return model, covered_sensors, gateway_locations
 
 
@@ -71,9 +72,13 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, covered_sens
         )
     )
 
-    model += mip.model.xsum(
+    """model += mip.model.xsum(
         covered_sensors[row][col] for col in grid.get_width_as_range() for row in grid.get_height_as_range()
-    ) == sensor_set
+    ) == sensor_set"""
+
+    model += mip.model.xsum(
+        gateway_locations[row][col] for col in grid.get_width_as_range() for row in grid.get_height_as_range()
+    ) >= 5
 
     return model
 
@@ -81,4 +86,9 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, covered_sens
 def optimize_model(model:mip.model.Model, grid:Grid, sensor_set:set, covered_sensors:list, gateway_locations:list) -> mip.model.Model:
     model.optimize()
     if model.num_solutions:
-        print("FOUND")
+        for y in grid.get_height_as_range():
+            for x in grid.get_width_as_range():
+                if gateway_locations[y][x].x >= 0.99:
+                    print('Gateway Location: {}, {}'.format(x, y))
+
+        

@@ -7,9 +7,9 @@ from functions import preprocess as pproc
 from functions import clustering
 
 parser = argparse.ArgumentParser(description='ILP Sensor Clustering - Clustering of sensors using Integer Linear Programming concept')
-parser.add_argument('--size', required=False, default=1000, type=int)
-parser.add_argument('--sensor_count', required=False, default=75, type=int)
-parser.add_argument('--distance_threshold', required=False, default=100.0, type=float)
+parser.add_argument('--size', required=False, default=100, type=int)
+parser.add_argument('--sensor_count', required=False, default=25, type=int)
+parser.add_argument('--distance_threshold', required=False, default=150.0, type=float)
 
 args = vars(parser.parse_args())
 GRID_SIZE = args['size']
