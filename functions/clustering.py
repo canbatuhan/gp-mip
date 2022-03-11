@@ -2,25 +2,16 @@ import numpy as np
 import mip.model
 import mip.constants
 
-from structs import Grid, Sensor
+from structs import Grid
 
 
-def calculate_distance(point1:tuple, point2:tuple) -> float:
+def calculate_distance(point1:tuple, point2:tuple) -> int:
     x1, y1 = point1
     x2, y2 = point2
-    return np.sqrt((x1-x2)**2 + (y1-y2)**2)
+    return int(np.sqrt((x1-x2)**2 + (y1-y2)**2))
 
 
-def sensors_covered(gateway_point:tuple, sensor_set:set, distance_threshold:float) -> set:
-    covered_sensor_set = set()
-    for sensor in sensor_set:
-        distance = calculate_distance(gateway_point, (sensor.get_x(), sensor.get_y()))
-        if distance <= distance_threshold:
-            covered_sensor_set.add(sensor)
-    return covered_sensor_set
-
-
-def generate_model(grid:Grid, sensor_set:set, distance_threshold:float) -> dict:
+def generate_model(grid:Grid) -> tuple:
     """
         Description:
             Generates a model and the variable matrices
@@ -28,28 +19,14 @@ def generate_model(grid:Grid, sensor_set:set, distance_threshold:float) -> dict:
 
         Arguments:
             - grid : `Grid` grid that the sensors are located on
-            - sensor_set : `set` array storing the sensors
-            - distance_threshold : `float` thershold value for the distance
-            between the gateway and a sensor
 
         Return:
-            - `dict` : package storing the model and
-            the model variables
+            - `mip.Model` : raw model
+            - `list` : list storing the model variables, representing the
+            gateway location
     """
-    # Creating empty model
+    # Creating an empty model
     model = mip.model.Model()
-
-    # Creating all possible gateway locations
-    # with the data of covered sensors
-    covered_sensors = [
-        [
-            sensors_covered(
-                gateway_point=(x, y),
-                sensor_set=sensor_set,
-                distance_threshold=distance_threshold
-            ) for y in grid.get_width_as_range()
-        ] for x in grid.get_height_as_range()
-    ]
 
     # Creating an array to indicate that
     # a location is suitable for placing gateway 
@@ -61,34 +38,46 @@ def generate_model(grid:Grid, sensor_set:set, distance_threshold:float) -> dict:
         ] for _ in grid.get_height_as_range()
     ]
 
+    return model, gateway_locations
 
-    return model, covered_sensors, gateway_locations
 
-
-def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, covered_sensors:list, gateway_locations:list) -> mip.model.Model:
-    model.objective = mip.model.minimize(
+def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_locations:list, distance_threshold:int) -> mip.model.Model:
+    """model.objective = mip.model.minimize(
         objective=mip.model.xsum(
             gateway_locations[row][col] for col in grid.get_width_as_range() for row in grid.get_height_as_range()
         )
+    )"""
+
+    model.objective = mip.model.minimize(
+        mip.model.xsum([
+            gateway_locations[gateway_y][gateway_x] * (0 < calculate_distance(
+                (sensor.get_x(), sensor.get_y()), (gateway_x, gateway_y)
+            ) <= distance_threshold)
+            for gateway_y in grid.get_height_as_range()
+            for gateway_x in grid.get_width_as_range()
+            for sensor in sensor_set
+        ])
     )
 
-    """model += mip.model.xsum(
-        covered_sensors[row][col] for col in grid.get_width_as_range() for row in grid.get_height_as_range()
-    ) == sensor_set"""
-
-    model += mip.model.xsum(
-        gateway_locations[row][col] for col in grid.get_width_as_range() for row in grid.get_height_as_range()
-    ) >= 5
+    for sensor in sensor_set:
+        sensor_x, sensor_y = sensor.get_x(), sensor.get_y()
+        model += mip.model.xsum([
+            gateway_locations[gateway_y][gateway_x] * (0 < calculate_distance(
+                (sensor_x, sensor_y), (gateway_x, gateway_y)
+            ) <= distance_threshold)
+            for gateway_x in grid.get_width_as_range()
+            for gateway_y in grid.get_height_as_range()
+        ]) >= 1
 
     return model
 
 
-def optimize_model(model:mip.model.Model, grid:Grid, sensor_set:set, covered_sensors:list, gateway_locations:list) -> mip.model.Model:
+def optimize_model(model:mip.model.Model, grid:Grid, gateway_locations:list) -> tuple:
     model.optimize()
     if model.num_solutions:
         for y in grid.get_height_as_range():
             for x in grid.get_width_as_range():
-                if gateway_locations[y][x].x >= 0.99:
+                if gateway_locations[y][x].x == 1:
                     print('Gateway Location: {}, {}'.format(x, y))
-
-        
+    
+    return model, gateway_locations
