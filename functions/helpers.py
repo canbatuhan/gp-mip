@@ -4,6 +4,7 @@ from .clustering import calculate_distance
 
 from structs import Grid, Sensor
 
+
 def generate_sensors(size:int, sensor_count:int) -> set:
     """
         Description:
@@ -29,89 +30,68 @@ def generate_sensors(size:int, sensor_count:int) -> set:
     return sensor_set
 
 
-def record_sensor_locations(sensor_set:set) -> None:
+def record_locations(node_type:str, node_set:set, file_path:str) -> None:
     """
         Description:
-            Records the sensor locations for further use
+            Records the node locations for further use
 
         Arguments:
-            - sensor_set : `set` set storing the sensors
+            - node_type : `str` type of the node
+            - node_set : `set` set storing the nodes
+            - file_path : `str` file to write into 
     """
-    with open('docs/sensor_locations.txt', 'w') as file:
-        for sensor in sensor_set:
-            file.write('Sensor#{}\tx:{}\ty:{}\n'.format(
-                sensor.get_id(), sensor.get_x(), sensor.get_y()))
+    with open(file_path, 'w') as file:
+        for node in node_set:
+            file.write('{}#{}\tx:{}\ty:{}\n'.format(
+                node_type, node.get_id(), node.get_x(), node.get_y()))
 
 
-def record_gateway_locations(grid:Grid, gateway_locations:list) -> None:
-    with open('docs/gateway_locations.txt', 'w') as file:
-        for x in grid.get_width_as_range():
-            for y in grid.get_height_as_range():
-                if gateway_locations[y][x].x == 1:
-                    file.write('Gateway#{}{}\tx:{}\ty:{}\n'.format(
-                        x, y, x, y))
-
-
-def show_sensor_locations(grid:Grid, sensor_set:set) -> None:
+def show_locations(node_type:str, node_set:set, grid:Grid, file_path:str) -> None:
     """
         Description:
-            Visualizes the sensors on the generated grid
+            Visualizes the nodes on the generated grid
             and saves the figure
     
         Arguments:
-            - grid : `Grid` grid that the sensors are located on
-            - sensor_set : `set` array storing the sensors
+            - node_type : `str` type of the node
+            - node_set : `set` set storing the nodes
+            - grid : `Grid` grid that the nodes are located on
+            - file_path : `str` file to save figure into 
     """
     x_locations, y_locations = list(), list()
-    for sensor in sensor_set:
-        x_locations.append(sensor.get_x())
-        y_locations.append(sensor.get_y())
+    for node in node_set:
+        x_locations.append(node.get_x())
+        y_locations.append(node.get_y())
 
-    plt.title("Sensor Locations on Grid")
+    plt.title("{} Locations on Grid".format(node_type))
     plt.xlim(left=0, right=grid.get_width())
     plt.ylim(bottom=0, top=grid.get_height())
 
-    plt.grid(b=True, axis='both')
     plt.scatter(x_locations, y_locations, alpha=0.9)
     plt.legend()
-    plt.savefig('docs/sensor_locations.png')
+    plt.savefig(file_path)
     plt.show()
 
 
-def show_gateway_locations(grid:Grid, gateway_locations:list) -> None:
-    x_locations, y_locations = list(), list()
-    for x in grid.get_width_as_range():
-        for y in grid.get_height_as_range():
-            if gateway_locations[y][x].x == 1:
-                x_locations.append(x)
-                y_locations.append(y)
+def show_grid(grid:Grid, sensor_set:set, gateway_set:list, distance_threshold:int, file_path:str) -> None:
+    """
+        Description:
+            Visualizes the sensors and gateways on the same grid
+            and visualizes the connection between nodes, finally
+            saves the figure
 
-    plt.title("Gateway Locations on Grid")
-    plt.xlim(left=0, right=grid.get_width())
-    plt.ylim(bottom=0, top=grid.get_height())
-
-    plt.grid(b=True, axis='both')
-    plt.scatter(x_locations, y_locations, alpha=0.9)
-    plt.legend()
-    plt.savefig('docs/gateway_locations.png')
-    plt.show()
-
-
-def show_grid(grid:Grid, sensor_set:set, gateway_locations:list, distance_threshold:int) -> None:
+        Arguments:
+            - grid : `Grid` grid that the nodes are located on
+            - sensor_set : `set` set storing the sensor objects
+            - gateway_set : `set` set storing the gateway objects
+            - distance_threshold : `int` upper limit of distance
+            between nodes so that can communicate
+            - file_path : `str` file to save figure into
+    """
     gateway_x_data, gateway_y_data = list(), list()
-    for y in grid.get_height_as_range():
-        for x in grid.get_width_as_range():
-            if gateway_locations[y][x].x == 1:
-                gateway_x_data.append(x)
-                gateway_y_data.append(y)
-                for sensor in sensor_set:
-                    distance = calculate_distance((sensor.get_x(), sensor.get_y()), (x, y))
-                    if distance <= distance_threshold:
-                        plt.plot(
-                            [x, sensor.get_x()],
-                            [y, sensor.get_y()],
-                            color="g", alpha=0.8
-                        )
+    for gateway in gateway_set:
+        gateway_x_data.append(gateway.get_x())
+        gateway_y_data.append(gateway.get_y())
 
     sensor_x_data, sensor_y_data = list(), list()
     for sensor in sensor_set:
@@ -122,9 +102,18 @@ def show_grid(grid:Grid, sensor_set:set, gateway_locations:list, distance_thresh
     plt.xlim(left=0, right=grid.get_width())
     plt.ylim(bottom=0, top=grid.get_height())
 
-    plt.grid(b=True, axis='both')
-    plt.scatter(gateway_x_data, gateway_y_data, label="Gateways", s=40)
+    plt.scatter(gateway_x_data, gateway_y_data, label="Gateways", s=50)
     plt.scatter(sensor_x_data, sensor_y_data, label="Sensors", s=20)
+
+    for gateway in gateway_set:
+        gateway_point = (gateway.get_x(), gateway.get_y())
+        for sensor in sensor_set:
+            sensor_point = (sensor.get_x(), sensor.get_y())
+            if calculate_distance(gateway_point, sensor_point) <= distance_threshold:
+                x_data = [gateway.get_x(), sensor.get_x()]
+                y_data = [gateway.get_y(), sensor.get_y()]
+                plt.plot(x_data, y_data, color = "g", alpha = 0.9)
+            
     plt.legend()
-    plt.savefig('docs/grid.png')
+    plt.savefig(file_path)
     plt.show()

@@ -4,7 +4,6 @@ class Grid:
     def __init__(self, size:int) -> None:
         self.__height = size
         self.__width = size
-        # self.__sensor_count = 0
 
     def __len__(self) -> int:
         return self.__height * self.__width

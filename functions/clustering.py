@@ -2,7 +2,7 @@ import numpy as np
 import mip.model
 import mip.constants
 
-from structs import Grid
+from structs import Grid, Gateway
 
 
 def calculate_distance(point1:tuple, point2:tuple) -> int:
@@ -21,9 +21,8 @@ def generate_model(grid:Grid) -> tuple:
             - grid : `Grid` grid that the sensors are located on
 
         Return:
-            - `mip.Model` : raw model
-            - `list` : list storing the model variables, representing the
-            gateway location
+            - `mip.model.Model` : raw model
+            - `list` : locations that are proper for placing the gateway
     """
     # Creating an empty model
     model = mip.model.Model()
@@ -42,11 +41,24 @@ def generate_model(grid:Grid) -> tuple:
 
 
 def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_locations:list, distance_threshold:int) -> mip.model.Model:
-    """model.objective = mip.model.minimize(
-        objective=mip.model.xsum(
-            gateway_locations[row][col] for col in grid.get_width_as_range() for row in grid.get_height_as_range()
-        )
-    )"""
+    """
+        Description:
+            Develops the model by adding objectives and
+            constraints which are the key part of the
+            optimization problem
+
+        Arguments:
+            - model : `mip.model.Model` model to develop
+            - grid : `Grid` grid that the nodes are located on
+            - gateway_locations : `list` locations that are proper
+            for placing the gateway
+            - distance_threshold : `int` upper limit of distance
+            between nodes so that can communicate
+
+        Return:
+            - `mip.model.Model` : model that is developed by objectives
+            and constraints
+    """
 
     model.objective = mip.model.minimize(
         mip.model.xsum([
@@ -72,12 +84,32 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
     return model
 
 
-def optimize_model(model:mip.model.Model, grid:Grid, gateway_locations:list) -> tuple:
+def optimize_model(model:mip.model.Model, grid:Grid, gateway_locations:list) -> set:
+    """
+        Description:
+            Optimizes the model, then generates gateway objects
+            which are placed on the optimum locations
+        
+        Arguments:
+            - model : `mip.model.Model` model to optimize
+            - grid : `Grid` grid that the nodes are located on
+            - gateway_locations : `list` locations that are proper
+            for placing the gateway
+
+        Return:
+            - `set` : set storing the gateway objects
+    """
+    gateway_set = set()
     model.optimize()
     if model.num_solutions:
-        for y in grid.get_height_as_range():
-            for x in grid.get_width_as_range():
-                if gateway_locations[y][x].x == 1:
-                    print('Gateway Location: {}, {}'.format(x, y))
+        for gateway_y in grid.get_height_as_range():
+            for gateway_x in grid.get_width_as_range():
+                if gateway_locations[gateway_y][gateway_x].x == 1:
+                    new_gateway = Gateway(
+                        id=str(gateway_x)+str(gateway_y),
+                        x=gateway_x,
+                        y=gateway_y)
+                    gateway_set.add(new_gateway)
+                    
     
-    return model, gateway_locations
+    return gateway_set
