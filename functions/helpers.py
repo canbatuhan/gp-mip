@@ -1,8 +1,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from .clustering import calculate_distance
 
 from structs import Grid, Sensor
+
+
+def calculate_distance(point1:tuple, point2:tuple) -> int:
+    x1, y1 = point1
+    x2, y2 = point2
+    return int(np.sqrt((x1-x2)**2 + (y1-y2)**2))
+
+
+def generate_circle(center:tuple, radius:int) -> tuple:
+    center_x, center_y = center
+    theta = np.linspace(0 , 2*np.pi, 150)
+    x_data = radius * (np.cos(theta) - center_x)
+    y_data = radius * (np.sin(theta) - center_y)
+    return x_data, y_data
 
 
 def generate_sensors(size:int, sensor_count:int) -> set:
@@ -92,6 +105,10 @@ def show_grid(grid:Grid, sensor_set:set, gateway_set:list, distance_threshold:in
     for gateway in gateway_set:
         gateway_x_data.append(gateway.get_x())
         gateway_y_data.append(gateway.get_y())
+        circle_x, circle_y = generate_circle(
+            center=(gateway.get_x(), gateway_y_data()),
+            radius=distance_threshold)
+        plt.plot(circle_x, circle_y, color='grey')
 
     sensor_x_data, sensor_y_data = list(), list()
     for sensor in sensor_set:

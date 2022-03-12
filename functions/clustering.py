@@ -3,12 +3,7 @@ import mip.model
 import mip.constants
 
 from structs import Grid, Gateway
-
-
-def calculate_distance(point1:tuple, point2:tuple) -> int:
-    x1, y1 = point1
-    x2, y2 = point2
-    return int(np.sqrt((x1-x2)**2 + (y1-y2)**2))
+import helpers
 
 
 def generate_model(grid:Grid) -> tuple:
@@ -62,7 +57,7 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
 
     model.objective = mip.model.minimize(
         mip.model.xsum([
-            gateway_locations[gateway_y][gateway_x] * (0 < calculate_distance(
+            gateway_locations[gateway_y][gateway_x] * (0 < helpers.calculate_distance(
                 (sensor.get_x(), sensor.get_y()), (gateway_x, gateway_y)
             ) <= distance_threshold)
             for gateway_y in grid.get_height_as_range()
@@ -74,7 +69,7 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
     for sensor in sensor_set:
         sensor_x, sensor_y = sensor.get_x(), sensor.get_y()
         model += mip.model.xsum([
-            gateway_locations[gateway_y][gateway_x] * (0 < calculate_distance(
+            gateway_locations[gateway_y][gateway_x] * (0 < helpers.calculate_distance(
                 (sensor_x, sensor_y), (gateway_x, gateway_y)
             ) <= distance_threshold)
             for gateway_x in grid.get_width_as_range()
@@ -109,7 +104,6 @@ def optimize_model(model:mip.model.Model, grid:Grid, gateway_locations:list) -> 
                         id=str(gateway_x)+str(gateway_y),
                         x=gateway_x,
                         y=gateway_y)
-                    gateway_set.add(new_gateway)
-                    
+                    gateway_set.add(new_gateway)        
     
     return gateway_set

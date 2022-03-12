@@ -5,9 +5,9 @@ from functions import helpers
 from functions import clustering
 
 parser = argparse.ArgumentParser(description='ILP Sensor Clustering - Clustering of sensors using Integer Linear Programming concept')
-parser.add_argument('--size', required=False, default=250, type=int)
+parser.add_argument('--size', required=False, default=100, type=int)
 parser.add_argument('--sensor_count', required=False, default=75, type=int)
-parser.add_argument('--distance_threshold', required=False, default=35, type=float)
+parser.add_argument('--distance_threshold', required=False, default=15, type=float)
 
 args = vars(parser.parse_args())
 GRID_SIZE = args['size']
