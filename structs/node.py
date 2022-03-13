@@ -19,8 +19,8 @@ class Gateway(Node):
         super().__init__(id, x, y)
 
     def __str__(self) -> str:
-        return "[Sensor#{}; x={}, y{}]".format(
-            self.__id, self.__x, self.__y)
+        return "[Gateway#{}; x={}, y={}]".format(
+            self.get_id(), self.get_x(), self.get_y())
 
 
 class Sensor(Node):
@@ -28,5 +28,5 @@ class Sensor(Node):
         super().__init__(id, x, y)
 
     def __str__(self) -> str:
-        return "[Sensor#{}; x={}, y{}]".format(
-            self.__id, self.__x, self.__y)
+        return "[Sensor#{}; x={}, y={}]".format(
+            self.get_id(), self.get_x(), self.get_y())

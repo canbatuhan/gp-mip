@@ -3,7 +3,7 @@ import mip.model
 import mip.constants
 
 from structs import Grid, Gateway
-import helpers
+from . import helpers
 
 
 def generate_model(grid:Grid) -> tuple:

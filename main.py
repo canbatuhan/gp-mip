@@ -1,8 +1,10 @@
 import argparse
 
 from structs import Grid
-from functions import helpers
 from functions import clustering
+from functions import helpers
+from functions import logging
+from functions import visualization
 
 parser = argparse.ArgumentParser(description='ILP Sensor Clustering - Clustering of sensors using Integer Linear Programming concept')
 parser.add_argument('--size', required=False, default=100, type=int)
@@ -28,19 +30,19 @@ if __name__=='__main__':
         grid=grid,
         sensor_set=sensor_set,
         gateway_locations=gateway_locations,
-        distance_threshold=DISTANCE_THRESHOLD
-    )
+        distance_threshold=DISTANCE_THRESHOLD)
 
     # ___Running___
     gateway_set = clustering.optimize_model(
         model=developed_model,
         grid=grid,
-        gateway_locations=gateway_locations
-    )
+        gateway_locations=gateway_locations)
 
-    # ___Visualization And Logging___
-    helpers.record_locations("Sensor", sensor_set, 'docs/sensors.txt')
-    helpers.record_locations("Gateway", gateway_set, 'docs/gateways.txt')
-    helpers.show_locations("Sensor", sensor_set, grid, 'docs/sensor_placement.jpg')
-    helpers.show_locations("Gateway", gateway_set, grid, 'docs/gateway_placement.jpg')
-    helpers.show_grid(grid, sensor_set, gateway_set, DISTANCE_THRESHOLD, 'docs/grid.jpg')
+    # ___Logging___
+    logging.record_nodes(sensor_set, 'docs/sensors.txt')
+    logging.record_nodes(gateway_set, 'docs/gateways.txt')
+
+    # ___Visualization___
+    visualization.show_locations("Sensor", sensor_set, grid, 'docs/sensor_placement.png')
+    visualization.show_locations("Gateway", gateway_set, grid, 'docs/gateway_placement.png')
+    visualization.show_grid(sensor_set, gateway_set, grid, DISTANCE_THRESHOLD, 'docs/grid.png')
