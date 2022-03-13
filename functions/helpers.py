@@ -12,10 +12,10 @@ def generate_sensors(size:int, sensor_count:int) -> set:
 
         Arguments:
             - size : `int` grid size
-            - sensor_count : `int` number of sensors
+            - sensor_count : `int` number of `Sensor` nodes
 
         Return:
-            - `set` : set storing the sensor objects
+            - `set` : set storing the `Sensor` nodes
     """
     sensor_set = set()
 

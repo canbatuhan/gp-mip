@@ -45,6 +45,7 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
         Arguments:
             - model : `mip.model.Model` model to develop
             - grid : `Grid` grid that the nodes are located on
+            - sensor_set : `set` set storing the `Sensor` nodes
             - gateway_locations : `list` locations that are proper
             for placing the gateway
             - distance_threshold : `int` upper limit of distance
@@ -57,7 +58,7 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
 
     model.objective = mip.model.minimize(
         mip.model.xsum([
-            gateway_locations[gateway_y][gateway_x] * (0 < helpers.calculate_distance(
+            gateway_locations[gateway_y][gateway_x] * (0 <= helpers.calculate_distance(
                 (sensor.get_x(), sensor.get_y()), (gateway_x, gateway_y)
             ) <= distance_threshold)
             for gateway_y in grid.get_height_as_range()
@@ -69,7 +70,7 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
     for sensor in sensor_set:
         sensor_x, sensor_y = sensor.get_x(), sensor.get_y()
         model += mip.model.xsum([
-            gateway_locations[gateway_y][gateway_x] * (0 < helpers.calculate_distance(
+            gateway_locations[gateway_y][gateway_x] * (0 <= helpers.calculate_distance(
                 (sensor_x, sensor_y), (gateway_x, gateway_y)
             ) <= distance_threshold)
             for gateway_x in grid.get_width_as_range()
@@ -82,7 +83,7 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
 def optimize_model(model:mip.model.Model, grid:Grid, gateway_locations:list) -> set:
     """
         Description:
-            Optimizes the model, then generates gateway objects
+            Optimizes the model, then generates `Gateway` objects
             which are placed on the optimum locations
         
         Arguments:
@@ -92,7 +93,7 @@ def optimize_model(model:mip.model.Model, grid:Grid, gateway_locations:list) -> 
             for placing the gateway
 
         Return:
-            - `set` : set storing the gateway objects
+            - `set` : set storing the `Gateway` nodes
     """
     gateway_set = set()
     model.optimize()

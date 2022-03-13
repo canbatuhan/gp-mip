@@ -16,6 +16,7 @@ def show_locations(node_type:str, node_set:set, grid:Grid, file_path:str) -> Non
             - grid : `Grid` grid that the nodes are located on
             - file_path : `str` file to save figure into 
     """
+    plt.figure(figsize=(9, 9))
     plt.title("{} Locations on Grid".format(node_type))
     plt.xlim(left=0, right=grid.get_width())
     plt.ylim(bottom=0, top=grid.get_height())
@@ -31,7 +32,7 @@ def show_locations(node_type:str, node_set:set, grid:Grid, file_path:str) -> Non
         
     plt.legend()
     plt.savefig(file_path)
-    plt.show()
+    #plt.show()
     plt.close()
 
 
@@ -44,12 +45,13 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:int
 
         Arguments:
             - grid : `Grid` grid that the nodes are located on
-            - sensor_set : `set` set storing the sensor objects
-            - gateway_set : `set` set storing the gateway objects
+            - sensor_set : `set` set storing the `Sensor` nodes
+            - gateway_set : `set` set storing the `Gateway` nodes
             - distance_threshold : `int` upper limit of distance
             between nodes so that can communicate
             - file_path : `str` file to save figure into
     """
+    plt.figure(figsize=(9, 9))
     plt.title("Grid")
     plt.xlim(left=0, right=grid.get_width())
     plt.ylim(bottom=0, top=grid.get_height())
