@@ -62,35 +62,39 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
     # Aim is to minimize the total number of gateways
     # covering the sensors placed on the grid
     model.objective = mip.model.minimize(
-        mip.model.xsum([
+        mip.model.xsum(
             gateway_locations[gateway_y][gateway_x] * distance_condition(
                 sensor.get_x(), sensor.get_y(), gateway_x, gateway_y)
             for gateway_x in grid.get_width_as_range()
             for gateway_y in grid.get_height_as_range()
-            for sensor in sensor_set
-        ])
-    )
+            for sensor in sensor_set))
+
+    # A constraint for the model is that the number of
+    # gateways covering a sensor should be at least 1
+    for sensor in sensor_set:
+        model.add_constr(mip.model.xsum(
+            gateway_locations[gateway_y][gateway_x] * distance_condition(
+                sensor.get_x(), sensor.get_y(), gateway_x, gateway_y)
+            for gateway_x in grid.get_width_as_range()
+            for gateway_y in grid.get_height_as_range()) >= 1)
 
     # A constraint for the model is that the average score
     # of the sensors covered by the same gateway should
     # be at least 5 (maximum : 10)
     """for gateway_y in grid.get_height_as_range():
         for gateway_x in grid.get_width_as_range():
-            model += mip.model.xsum([
+            model.add_constr(
                 gateway_locations[gateway_y][gateway_x] * distance_condition(
-                    sensor.get_x(), sensor.get_y(), gateway_x, gateway_y)
-                for sensor in sensor_set
-            ]) >= 5"""
+                    sensor.get_x(), sensor.get_y(), gateway_x, gateway_y) * sensor.get_score()
+                for sensor in sensor_set >= 5)
 
-    # A constraint for the model is that the number of
-    # gateways covering a sensor should be at least 1
-    for sensor in sensor_set:
-        model += mip.model.xsum([
-            gateway_locations[gateway_y][gateway_x] * distance_condition(
-                sensor.get_x(), sensor.get_y(), gateway_x, gateway_y)
-            for gateway_x in grid.get_width_as_range()
-            for gateway_y in grid.get_height_as_range()
-        ]) >= 1
+            total_score = mip.model.xsum(gateway_locations[gateway_y][gateway_x] * distance_condition(
+                        sensor.get_x(), sensor.get_y(), gateway_x, gateway_y) * sensor.get_score()
+                    for sensor in sensor_set) >= 5
+            
+            if total_score >= 5:
+                print('Gateway\t:\t({},{})\t:\t{}\t'.format(
+                    gateway_x, gateway_y, total_score))"""
 
     return model
 
@@ -112,6 +116,7 @@ def optimize_model(model:mip.model.Model, grid:Grid, gateway_locations:list) -> 
     """
     gateway_set = set()
     model.optimize()
+
     if model.num_solutions:
         gateway_id = 0
         for gateway_y in grid.get_height_as_range():
