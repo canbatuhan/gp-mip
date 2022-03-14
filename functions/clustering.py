@@ -55,28 +55,39 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
             - `mip.model.Model` : model that is developed by objectives
             and constraints
     """
+    distance_condition = lambda x1, y1, x2, y2 : 0 <= helpers.calculate_distance(
+            (x1, y1), (x2, y2)
+        ) <= distance_threshold
 
     # Aim is to minimize the total number of gateways
     # covering the sensors placed on the grid
     model.objective = mip.model.minimize(
         mip.model.xsum([
-            gateway_locations[gateway_y][gateway_x] * (0 <= helpers.calculate_distance(
-                (sensor.get_x(), sensor.get_y()), (gateway_x, gateway_y)
-            ) <= distance_threshold)
-            for gateway_y in grid.get_height_as_range()
+            gateway_locations[gateway_y][gateway_x] * distance_condition(
+                sensor.get_x(), sensor.get_y(), gateway_x, gateway_y)
             for gateway_x in grid.get_width_as_range()
+            for gateway_y in grid.get_height_as_range()
             for sensor in sensor_set
         ])
     )
 
+    # A constraint for the model is that the average score
+    # of the sensors covered by the same gateway should
+    # be at least 5 (maximum : 10)
+    """for gateway_y in grid.get_height_as_range():
+        for gateway_x in grid.get_width_as_range():
+            model += mip.model.xsum([
+                gateway_locations[gateway_y][gateway_x] * distance_condition(
+                    sensor.get_x(), sensor.get_y(), gateway_x, gateway_y)
+                for sensor in sensor_set
+            ]) >= 5"""
+
     # A constraint for the model is that the number of
     # gateways covering a sensor should be at least 1
     for sensor in sensor_set:
-        sensor_x, sensor_y = sensor.get_x(), sensor.get_y()
         model += mip.model.xsum([
-            gateway_locations[gateway_y][gateway_x] * (0 <= helpers.calculate_distance(
-                (sensor_x, sensor_y), (gateway_x, gateway_y)
-            ) <= distance_threshold)
+            gateway_locations[gateway_y][gateway_x] * distance_condition(
+                sensor.get_x(), sensor.get_y(), gateway_x, gateway_y)
             for gateway_x in grid.get_width_as_range()
             for gateway_y in grid.get_height_as_range()
         ]) >= 1

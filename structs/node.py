@@ -88,3 +88,9 @@ class Gateway(Node):
     def get_covered_sensors(self) -> set:
         return self.get_covered_nodes()
 
+    def get_total_score(self) -> int:
+        return self.__calc_scores()[0]
+
+    def get_average_score(self) -> float:
+        return self.__calc_scores()[1]
+

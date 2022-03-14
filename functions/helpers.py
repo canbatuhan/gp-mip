@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 from structs import Grid, Sensor
 
 
-MAX_SCORE = 100
-MIN_SCORE = 20
+MAX_SCORE = 10
+MIN_SCORE = 1
 
 
 def generate_sensors(size:int, sensor_count:int) -> set:
@@ -60,6 +60,10 @@ def generate_circle(center:tuple, radius:int) -> tuple:
         Arguments:
             - center : `tuple` center location of the circle
             - radius : `int` radiues of the center
+
+        Return:
+            - `np.ndarray` : circle-plot data on x axis
+            - `np.ndarray` : circle-plot data on y axis
     """
     center_x, center_y = center
     theta = np.linspace(0, 2*np.pi, 150)
