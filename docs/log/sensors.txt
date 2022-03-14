@@ -1,75 +1,75 @@
-[Sensor#50; x=37; y=94]
-[Sensor#17; x=51; y=51]
-[Sensor#18; x=48; y=59]
-[Sensor#19; x=46; y=89]
-[Sensor#52; x=58; y=67]
-[Sensor#0; x=57; y=47]
-[Sensor#53; x=8; y=21]
-[Sensor#20; x=22; y=96]
-[Sensor#21; x=90; y=43]
-[Sensor#54; x=5; y=96]
-[Sensor#55; x=84; y=86]
-[Sensor#5; x=53; y=41]
-[Sensor#22; x=84; y=95]
-[Sensor#56; x=34; y=28]
-[Sensor#48; x=33; y=37]
-[Sensor#1; x=83; y=50]
-[Sensor#23; x=79; y=64]
-[Sensor#4; x=56; y=77]
-[Sensor#24; x=20; y=56]
-[Sensor#47; x=46; y=81]
-[Sensor#2; x=14; y=12]
-[Sensor#25; x=98; y=10]
-[Sensor#46; x=12; y=6]
-[Sensor#42; x=29; y=24]
-[Sensor#43; x=66; y=97]
-[Sensor#3; x=93; y=91]
-[Sensor#26; x=52; y=45]
-[Sensor#64; x=98; y=69]
-[Sensor#6; x=74; y=85]
-[Sensor#27; x=70; y=26]
-[Sensor#63; x=7; y=2]
-[Sensor#74; x=3; y=83]
-[Sensor#10; x=20; y=2]
-[Sensor#28; x=70; y=20]
-[Sensor#39; x=15; y=92]
-[Sensor#65; x=63; y=18]
-[Sensor#73; x=63; y=60]
-[Sensor#9; x=46; y=13]
-[Sensor#29; x=94; y=78]
-[Sensor#44; x=4; y=58]
-[Sensor#41; x=31; y=93]
-[Sensor#72; x=55; y=56]
-[Sensor#30; x=86; y=75]
-[Sensor#7; x=26; y=93]
-[Sensor#40; x=34; y=9]
-[Sensor#57; x=78; y=32]
-[Sensor#8; x=57; y=29]
-[Sensor#31; x=38; y=9]
-[Sensor#71; x=29; y=84]
-[Sensor#70; x=59; y=45]
-[Sensor#11; x=68; y=28]
-[Sensor#32; x=76; y=85]
-[Sensor#58; x=50; y=90]
-[Sensor#37; x=2; y=40]
-[Sensor#69; x=27; y=30]
-[Sensor#12; x=19; y=81]
-[Sensor#38; x=56; y=86]
-[Sensor#59; x=20; y=78]
-[Sensor#36; x=64; y=86]
-[Sensor#68; x=56; y=10]
-[Sensor#13; x=33; y=98]
-[Sensor#51; x=50; y=22]
-[Sensor#60; x=71; y=41]
-[Sensor#35; x=28; y=28]
-[Sensor#45; x=57; y=16]
-[Sensor#14; x=52; y=84]
-[Sensor#67; x=29; y=20]
-[Sensor#34; x=5; y=86]
-[Sensor#66; x=13; y=24]
-[Sensor#15; x=38; y=75]
-[Sensor#49; x=53; y=43]
-[Sensor#33; x=0; y=56]
-[Sensor#61; x=13; y=83]
-[Sensor#62; x=74; y=79]
-[Sensor#16; x=32; y=10]
+Sensor#33	x=33	y=42	score=21
+Sensor#58	x=41	y=92	score=49
+Sensor#36	x=10	y=80	score=90
+Sensor#32	x=57	y=33	score=78
+Sensor#57	x=58	y=30	score=85
+Sensor#37	x=70	y=13	score=28
+Sensor#31	x=87	y=96	score=25
+Sensor#56	x=69	y=66	score=60
+Sensor#30	x=46	y=83	score=90
+Sensor#55	x=84	y=95	score=28
+Sensor#29	x=91	y=46	score=89
+Sensor#54	x=85	y=90	score=47
+Sensor#0	x=85	y=71	score=32
+Sensor#28	x=30	y=65	score=27
+Sensor#53	x=69	y=81	score=97
+Sensor#59	x=42	y=46	score=29
+Sensor#74	x=47	y=43	score=47
+Sensor#27	x=10	y=66	score=93
+Sensor#52	x=96	y=96	score=93
+Sensor#73	x=35	y=63	score=87
+Sensor#45	x=47	y=47	score=30
+Sensor#5	x=49	y=29	score=60
+Sensor#26	x=0	y=42	score=81
+Sensor#51	x=50	y=86	score=83
+Sensor#72	x=20	y=87	score=97
+Sensor#1	x=70	y=85	score=100
+Sensor#25	x=21	y=13	score=29
+Sensor#50	x=55	y=43	score=78
+Sensor#4	x=77	y=31	score=29
+Sensor#71	x=73	y=13	score=75
+Sensor#24	x=93	y=67	score=35
+Sensor#49	x=63	y=69	score=52
+Sensor#70	x=60	y=92	score=44
+Sensor#2	x=31	y=68	score=93
+Sensor#23	x=15	y=95	score=58
+Sensor#48	x=95	y=76	score=79
+Sensor#69	x=89	y=47	score=31
+Sensor#3	x=42	y=38	score=83
+Sensor#22	x=64	y=5	score=47
+Sensor#47	x=25	y=29	score=69
+Sensor#68	x=34	y=88	score=83
+Sensor#6	x=37	y=69	score=41
+Sensor#21	x=47	y=65	score=58
+Sensor#46	x=86	y=46	score=53
+Sensor#67	x=23	y=15	score=61
+Sensor#7	x=40	y=66	score=88
+Sensor#20	x=60	y=17	score=71
+Sensor#66	x=4	    y=93	score=93
+Sensor#38	x=43	y=89	score=90
+Sensor#8	x=21	y=5	    score=22
+Sensor#19	x=44	y=77	score=89
+Sensor#65	x=0	    y=8	    score=73
+Sensor#39	x=91	y=18	score=58
+Sensor#9	x=54	y=70	score=31
+Sensor#18	x=15	y=42	score=77
+Sensor#64	x=90	y=70	score=90
+Sensor#40	x=88	y=93	score=74
+Sensor#10	x=80	y=53	score=75
+Sensor#17	x=28	y=74	score=90
+Sensor#63	x=47	y=3	    score=58
+Sensor#41	x=30	y=84	score=40
+Sensor#11	x=23	y=64	score=100
+Sensor#16	x=20	y=84	score=68
+Sensor#62	x=40	y=85	score=60
+Sensor#42	x=13	y=63	score=52
+Sensor#12	x=71	y=35	score=58
+Sensor#15	x=19	y=78	score=86
+Sensor#61	x=42	y=33	score=20
+Sensor#43	x=39	y=54	score=35
+Sensor#14	x=83	y=4	    score=48
+Sensor#35	x=5	    y=11	score=99
+Sensor#44	x=99	y=84	score=30
+Sensor#60	x=10	y=34	score=80
+Sensor#34	x=97	y=51	score=69
+Sensor#13	x=67	y=58	score=94

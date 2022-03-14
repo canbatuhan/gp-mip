@@ -68,7 +68,7 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:int
         plt.plot(
             circle_x, circle_y,
             color='grey', alpha=0.5,
-            linestyle='--', linewidth=1)
+            linestyle='--', linewidth=0.75)
 
     sensor_x_data, sensor_y_data = list(), list()
     for sensor in sensor_set:
@@ -93,7 +93,7 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:int
 
                 plt.plot(
                     x_data, y_data,
-                    color = "g", alpha = 0.8,
+                    color="g", alpha=sensor.get_score()/100,
                     linestyle='-', linewidth=1)
             
     plt.legend()

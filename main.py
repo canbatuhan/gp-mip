@@ -1,4 +1,5 @@
 import argparse
+from turtle import distance
 
 from structs import Grid
 from functions import clustering
@@ -33,11 +34,17 @@ if __name__=='__main__':
         gateway_locations=gateway_locations,
         distance_threshold=DISTANCE_THRESHOLD)
 
-    # ___Running___
+    # ___Optimizing___
     gateway_set = clustering.optimize_model(
         model=developed_model,
         grid=grid,
         gateway_locations=gateway_locations)
+
+    # ___Connecting___
+    helpers.connect_nodes(
+        sensor_set=sensor_set,
+        gateway_set=gateway_set,
+        distance_threshold=DISTANCE_THRESHOLD)
 
     # ___Logging___
     logger.record_nodes(sensor_set, 'docs/log/sensors.txt')

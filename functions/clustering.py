@@ -56,6 +56,8 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
             and constraints
     """
 
+    # Aim is to minimize the total number of gateways
+    # covering the sensors placed on the grid
     model.objective = mip.model.minimize(
         mip.model.xsum([
             gateway_locations[gateway_y][gateway_x] * (0 <= helpers.calculate_distance(
@@ -67,6 +69,8 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
         ])
     )
 
+    # A constraint for the model is that the number of
+    # gateways covering a sensor should be at least 1
     for sensor in sensor_set:
         sensor_x, sensor_y = sensor.get_x(), sensor.get_y()
         model += mip.model.xsum([
@@ -98,13 +102,15 @@ def optimize_model(model:mip.model.Model, grid:Grid, gateway_locations:list) -> 
     gateway_set = set()
     model.optimize()
     if model.num_solutions:
+        gateway_id = 0
         for gateway_y in grid.get_height_as_range():
             for gateway_x in grid.get_width_as_range():
                 if gateway_locations[gateway_y][gateway_x].x == 1:
                     new_gateway = Gateway(
-                        id=str(gateway_x)+str(gateway_y),
+                        id=str(gateway_id),
                         x=gateway_x,
                         y=gateway_y)
-                    gateway_set.add(new_gateway)        
+                    gateway_set.add(new_gateway)
+                    gateway_id += 1      
     
     return gateway_set
