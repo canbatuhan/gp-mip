@@ -50,6 +50,36 @@ def calculate_distance(point1:tuple, point2:tuple) -> int:
     x1, y1 = point1
     x2, y2 = point2
     return int(np.ceil(np.sqrt((x1-x2)**2 + (y1-y2)**2)))
+    
+
+def calculate_avg_score(gateway_point:tuple, sensor_set:set, distance_threshold:int) -> float:
+    """
+        Description:
+            Calculates the average score of the sensors
+            covered by a `Gateway`
+
+        Arguments:
+            - gateway_point : `tuple` location of the `Gateway`
+            - sensor_set : `set` set storing `Sensor` nodes
+            - distance_threshold : `int` upper limit of distance
+            between nodes so that can communicate
+
+        Return:
+            - `float` : average score of `Sensor` nodes
+    """
+    total_score = 0
+    n_sensor_covered = 0
+    for sensor in sensor_set:
+        covers = calculate_distance(
+            gateway_point,
+            (sensor.get_x(), sensor.get_y())
+        ) <= distance_threshold
+        if covers:
+            total_score = total_score + sensor.get_score()
+            n_sensor_covered += 1
+    
+    if n_sensor_covered == 0: return 0
+    else: return total_score/n_sensor_covered
 
 
 def generate_circle(center:tuple, radius:int) -> tuple:
