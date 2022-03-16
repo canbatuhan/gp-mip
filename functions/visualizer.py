@@ -4,6 +4,27 @@ import matplotlib.pyplot as plt
 from functions import helpers
 from structs import Grid
 
+
+def generate_circle(center:tuple, radius:int) -> tuple:
+    """
+        Description:
+            Generates a circle data on x and y axes
+        
+        Arguments:
+            - center : `tuple` center location of the circle
+            - radius : `int` radiues of the center
+
+        Return:
+            - `np.ndarray` : circle-plot data on x axis
+            - `np.ndarray` : circle-plot data on y axis
+    """
+    center_x, center_y = center
+    theta = np.linspace(0, 2*np.pi, 150)
+    x_data = radius * np.cos(theta) + center_x
+    y_data = radius * np.sin(theta) + center_y
+    return x_data, y_data
+
+
 def show_locations(node_type:str, node_set:set, grid:Grid, file_path:str) -> None:
     """
         Description:
@@ -61,7 +82,7 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:int
         gateway_x_data.append(gateway.get_x())
         gateway_y_data.append(gateway.get_y())
 
-        circle_x, circle_y = helpers.generate_circle(
+        circle_x, circle_y = generate_circle(
             center=(gateway.get_x(), gateway.get_y()),
             radius=distance_threshold)
 
