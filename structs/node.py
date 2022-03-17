@@ -65,6 +65,9 @@ class Sensor(Node):
     def get_score(self) -> float:
         return self.__score
 
+    def set_score(self, score:float) -> None:
+        self.__score = score
+
 
 class Gateway(Node):
     def __init__(self, id:str, x:int, y:int) -> None:

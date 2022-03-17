@@ -29,9 +29,10 @@ if __name__=='__main__':
     grid = Grid(GRID_SIZE)
     # sensor_set = preprocessing.generate_random_sensors(GRID_SIZE, SENSOR_COUNT, MAX_SCORE, MIN_SCORE)
     sensor_set = preprocessing.init_sensors_from_file('docs/input/sensor_locations.tsv')
-    # preprocessing.set_sensor_scores(sensor_set, 'docs/input/sensor_placements.csv')
+    preprocessing.set_sensor_scores(sensor_set, 'docs/input/sensor_placements.csv')
 
-    # ___Building___
+
+    """# ___Building___
     generated_model, gateway_locations = clustering.generate_model(grid)
 
     # ___Developing___
@@ -51,3 +52,4 @@ if __name__=='__main__':
     visualizer.show_locations("Sensor", sensor_set, grid, 'docs/output/img/sensor_placement.png')
     visualizer.show_locations("Gateway", gateway_set, grid, 'docs/output/img/gateway_placement.png')
     visualizer.show_grid(sensor_set, gateway_set, grid, DISTANCE_THRESHOLD, 'docs/output/img/grid.png')
+"""

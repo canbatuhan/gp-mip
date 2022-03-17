@@ -55,13 +55,13 @@ def init_sensors_from_file(file_path:str) -> set:
 
     with open(file_path) as file:
         reader = csv.reader(file, delimiter='\t')
-        next(reader, None)
+        next(reader, None) # headers
         
         for row in reader:
             sensor_id = row[0]
             latitude = row[1] # for example 41°47'30.7"
             longitude = row[2] # for example 27°16'37.9"
-            elevation = row[3]
+            # elevation = row[3]
 
             long_as_float = helpers.convert_to_float(
                 raw_data=longitude,
@@ -78,9 +78,36 @@ def init_sensors_from_file(file_path:str) -> set:
             new_sensor = Sensor(
                 id=sensor_id,
                 x=long_as_float,
-                y=lat_as_float)
+                y=lat_as_float,
+                score=np.random.rand())
 
             sensor_set.add(new_sensor)
 
     return sensor_set
+
+
+def set_sensor_scores(sensor_set:set, file_path:str) -> None:
+    """
+        Description:
+            Sets the scores of some `Sensor` objects.
+            TODO : There are some sensors without score,
+            random scores will be assigned to these sensors
+
+        Arguments:
+            - sensor_set : `set` set storing `Sensor` objects
+            - file_path : `str` path of the input file
+    """
+    with open(file_path) as file:
+        reader = csv.reader(file, delimiter=',')
+        next(reader, None) # headers
+
+        for row in reader:
+            # index = row[0]
+            sensor_id = row[1]
+            # sensor_number = row[2]
+            # sensor_cost = row[3]
+            sensor_score = row[4]
             
+            for sensor in sensor_set:
+                if sensor.get_id() == sensor_id:
+                    sensor.set_score(sensor_score)
