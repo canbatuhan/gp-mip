@@ -27,8 +27,8 @@ MIN_SCORE = args['min_score']
 if __name__=='__main__':
     # ___Initializing___
     grid = Grid(GRID_SIZE)
-    sensor_set = preprocessing.generate_random_sensors(GRID_SIZE, SENSOR_COUNT, MAX_SCORE, MIN_SCORE)
-    # sensor_set = preprocessing.init_sensors_from_file('docs/input/sensor_locations.tsv')
+    # sensor_set = preprocessing.generate_random_sensors(GRID_SIZE, SENSOR_COUNT, MAX_SCORE, MIN_SCORE)
+    sensor_set = preprocessing.init_sensors_from_file('docs/input/sensor_locations.tsv')
     # preprocessing.set_sensor_scores(sensor_set, 'docs/input/sensor_placements.csv')
 
     # ___Building___

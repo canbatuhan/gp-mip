@@ -1,6 +1,24 @@
 import numpy as np
 
 
+def convert_to_float(raw_data:str, sec_delim:str, min_delim:str, deg_delim:str) -> float:
+    """
+        Description:
+            Converts the geographical data (for example, 27°16'37.9")
+            to a float value
+        
+        Arguments:
+            - raw_data : `str` geographical data
+            - sec_delim : `str` delimiter char for seconds
+            - min_delim : `str` delimiter char for minutes
+            - deg_delim : `str` delimiter char for degrees
+    """
+    seconds = float(raw_data.rsplit(min_delim)[-1].rsplit(sec_delim)[0])
+    minutes = float(raw_data.rsplit(deg_delim)[-1].rsplit(min_delim)[0])
+    degrees = float(raw_data.rsplit(deg_delim)[0])
+    return degrees + minutes/60 + seconds/3600
+
+
 def calculate_distance(point1:tuple, point2:tuple) -> int:
     """
         Description:

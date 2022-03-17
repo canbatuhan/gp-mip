@@ -1,6 +1,7 @@
 import numpy as np
 import csv
 
+from . import helpers
 from structs import Sensor
 
 
@@ -33,10 +34,53 @@ def generate_random_sensors(size:int, sensor_count:int, max_score:int, min_score
 
 
 def init_sensors_from_file(file_path:str) -> set:
+    """
+        Description:
+            Reads location data of the sensors placed
+            on the Ergene River, and create `Sensor` objects
+            from this data
+
+        Arguments:
+            - file_path : `str` path of the input file
+
+        Return:
+            - `set` : set storing `Sensor` objects
+    """
+    SECONDS_DELIMITER = '"'
+    MINUTES_DELIMITER = '\''
+    DEGREES_DELIMITER = 'Â°' # in Windows
+    # DEGREES_DELIMITER = '°' # in Linux
+    
+    sensor_set = set()
+
     with open(file_path) as file:
         reader = csv.reader(file, delimiter='\t')
         next(reader, None)
         
         for row in reader:
-            print(row)
-        
+            sensor_id = row[0]
+            latitude = row[1] # for example 41°47'30.7"
+            longitude = row[2] # for example 27°16'37.9"
+            elevation = row[3]
+
+            long_as_float = helpers.convert_to_float(
+                raw_data=longitude,
+                sec_delim=SECONDS_DELIMITER,
+                min_delim=MINUTES_DELIMITER,
+                deg_delim=DEGREES_DELIMITER)
+
+            lat_as_float = helpers.convert_to_float(
+                raw_data=latitude,
+                sec_delim=SECONDS_DELIMITER,
+                min_delim=MINUTES_DELIMITER,
+                deg_delim=DEGREES_DELIMITER)
+
+            new_sensor = Sensor(
+                id=sensor_id,
+                x=long_as_float,
+                y=lat_as_float)
+
+            sensor_set.add(new_sensor)
+
+    return sensor_set
+            

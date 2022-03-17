@@ -48,12 +48,12 @@ class Node:
 
 
 class Sensor(Node):
-    def __init__(self, id:str, x:int, y:int, score:int) -> None:
+    def __init__(self, id:str, x:int, y:int, score:float=0.0) -> None:
         super().__init__(id, x, y)
         self.__score = score
 
     def __str__(self) -> str:
-        return "Sensor#{}\tx={}\ty={}\tscore={}".format(
+        return "id={}\tx={}\ty={}\tscore={}".format(
             self.get_id(), self.get_x(), self.get_y(), self.__score)
 
     def find_covered_gateways(self, gateway_set:set, distance_threshold:int) -> None:
@@ -62,7 +62,7 @@ class Sensor(Node):
     def get_covered_gateways(self) -> set:
         return self.get_covered_nodes()
 
-    def get_score(self) -> int:
+    def get_score(self) -> float:
         return self.__score
 
 
@@ -72,7 +72,7 @@ class Gateway(Node):
 
     def __str__(self) -> str:
         total_score, average_score = self.__calc_scores()
-        return "Gateway#{}\tx={}\ty={}\ttotal_score={}\tavg_score={}".format(
+        return "id={}\tx={}\ty={}\ttotal_score={}\tavg_score={}".format(
             self.get_id(), self.get_x(), self.get_y(), total_score, average_score)
 
     def __calc_scores(self) -> tuple:

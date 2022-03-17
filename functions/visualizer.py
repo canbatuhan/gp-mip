@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from functions import helpers
+from . import helpers
 from structs import Grid
 
 
