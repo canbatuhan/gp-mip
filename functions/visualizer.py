@@ -39,8 +39,8 @@ def show_locations(node_type:str, node_set:set, grid:Grid, file_path:str) -> Non
     """
     plt.figure(figsize=(9, 9))
     plt.title("{} Locations on Grid".format(node_type))
-    plt.xlim(left=0, right=grid.get_width())
-    plt.ylim(bottom=0, top=grid.get_height())
+    plt.xlim(left=0-int(grid.get_width()*0.1), right=int(grid.get_width()*1.1))
+    plt.ylim(bottom=0-int(grid.get_height()*0.1), top=int(grid.get_height()*1.1))
 
     x_locations, y_locations = list(), list()
     for node in node_set:
@@ -74,8 +74,8 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:int
     """
     plt.figure(figsize=(9, 9))
     plt.title("Grid")
-    plt.xlim(left=0, right=grid.get_width())
-    plt.ylim(bottom=0, top=grid.get_height())
+    plt.xlim(left=0-int(grid.get_width()*0.1), right=int(grid.get_width()*1.1))
+    plt.ylim(bottom=0-int(grid.get_height()*0.1), top=int(grid.get_height()*1.1))
 
     gateway_x_data, gateway_y_data = list(), list()
     for gateway in gateway_set:

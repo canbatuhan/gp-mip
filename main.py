@@ -25,23 +25,31 @@ MIN_SCORE = args['min_score']
 
 
 if __name__=='__main__':
-    # ___Initializing___
+    # ___Random Initializing___
+    #grid = Grid(GRID_SIZE)
+    #sensor_set = preprocessing.generate_random_sensors(GRID_SIZE, SENSOR_COUNT, MAX_SCORE, MIN_SCORE)
+    
+    # ___Initializing Through File___
     grid = Grid(GRID_SIZE)
-    # sensor_set = preprocessing.generate_random_sensors(GRID_SIZE, SENSOR_COUNT, MAX_SCORE, MIN_SCORE)
     sensor_set = preprocessing.init_sensors_from_file('docs/input/sensor_locations.tsv')
     preprocessing.set_sensor_scores(sensor_set, 'docs/input/sensor_placements.csv')
+    preprocessing.normalize_sensor_locations(sensor_set, GRID_SIZE)
 
+    for sensor in sensor_set:
+        print(sensor)
 
-    """# ___Building___
+    visualizer.show_locations("Sensor", sensor_set, grid, 'docs/output/img/sensor_placement.png')
+
+    """# ___Building The Model___
     generated_model, gateway_locations = clustering.generate_model(grid)
 
-    # ___Developing___
+    # ___Developing The Model___
     developed_model = clustering.develop_model(generated_model, grid,sensor_set, gateway_locations, DISTANCE_THRESHOLD)
 
-    # ___Optimizing___
+    # ___Optimizing The Model___
     gateway_set = clustering.optimize_model(developed_model, grid, gateway_locations)
 
-    # ___Connecting___
+    # ___Connecting Sensors and Gateways___
     helpers.connect_nodes(sensor_set, gateway_set, DISTANCE_THRESHOLD)
 
     # ___Logging___

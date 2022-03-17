@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 
 
@@ -17,6 +18,30 @@ def convert_to_float(raw_data:str, sec_delim:str, min_delim:str, deg_delim:str) 
     minutes = float(raw_data.rsplit(deg_delim)[-1].rsplit(min_delim)[0])
     degrees = float(raw_data.rsplit(deg_delim)[0])
     return degrees + minutes/60 + seconds/3600
+
+
+def get_max_min_locations(sensor_set:set) -> tuple:
+    """
+        Description:
+            Finds the maximum and minimum x and y data
+            among `Sensor` objects
+
+        Arguments:
+            - sensor_set : `set` set storing the `Sensor` objects
+
+        Return:
+            `tuple` : maximum and minimum x and y data
+    """
+    max_x, max_y, min_x, min_y = 0, 0, sys.maxsize, sys.maxsize
+
+    for sensor in sensor_set:
+        sensor_x, sensor_y = sensor.get_x(), sensor.get_y()
+        if sensor_x > max_x: max_x = sensor_x
+        elif sensor_x < min_x: min_x = sensor_x
+        if sensor_y > max_y: max_y = sensor_y
+        elif sensor_y < min_y: min_y = sensor_y
+
+    return max_x, max_y, min_x, min_y
 
 
 def calculate_distance(point1:tuple, point2:tuple) -> int:

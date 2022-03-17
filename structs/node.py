@@ -46,6 +46,12 @@ class Node:
     def get_covered_nodes(self) -> set:
         return self.__covered_nodes
 
+    def set_x(self, x:int) -> None:
+        self.__x = x
+
+    def set_y(self, y:int) -> None:
+        self.__y = y
+
 
 class Sensor(Node):
     def __init__(self, id:str, x:int, y:int, score:float=0.0) -> None:

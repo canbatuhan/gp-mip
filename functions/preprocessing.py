@@ -61,7 +61,7 @@ def init_sensors_from_file(file_path:str) -> set:
             sensor_id = row[0]
             latitude = row[1] # for example 41°47'30.7"
             longitude = row[2] # for example 27°16'37.9"
-            # elevation = row[3]
+            #elevation = row[3]
 
             long_as_float = helpers.convert_to_float(
                 raw_data=longitude,
@@ -102,12 +102,30 @@ def set_sensor_scores(sensor_set:set, file_path:str) -> None:
         next(reader, None) # headers
 
         for row in reader:
-            # index = row[0]
+            #index = row[0]
             sensor_id = row[1]
-            # sensor_number = row[2]
-            # sensor_cost = row[3]
+            #sensor_number = row[2]
+            #sensor_cost = row[3]
             sensor_score = row[4]
             
             for sensor in sensor_set:
                 if sensor.get_id() == sensor_id:
                     sensor.set_score(sensor_score)
+
+
+def normalize_sensor_locations(sensor_set:set, grid_size:int) -> None:
+    """
+        Description:
+            Normalizes the location data of `Sensor` objects,
+            so they can be used in the optimization model
+
+        Arguments:
+            - sensor_set : `set` set storing the `Sensor` objects
+            - grid_size : `int` size to normalize the location data
+    """
+    max_x, max_y, min_x, min_y = helpers.get_max_min_locations(sensor_set)
+    for sensor in sensor_set:
+        new_x = grid_size*(sensor.get_x()-min_x)/(max_x-min_x)
+        new_y = grid_size*(sensor.get_y()-min_y)/(max_y-min_y)
+        sensor.set_x(new_x)
+        sensor.set_y(new_y)
