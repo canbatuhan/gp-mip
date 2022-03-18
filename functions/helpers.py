@@ -44,7 +44,7 @@ def get_max_min_locations(sensor_set:set) -> tuple:
     return max_x, max_y, min_x, min_y
 
 
-def calculate_distance(point1:tuple, point2:tuple) -> int:
+def calculate_distance(point1:tuple, point2:tuple) -> float:
     """
         Description:
             Calculates the distance between two points
@@ -54,12 +54,11 @@ def calculate_distance(point1:tuple, point2:tuple) -> int:
             - point2 : `tuple` second point
 
         Returns:
-            - `int` : ceil integer of the calculated
-            (float) distance
+            - `int` : distance between two points
     """
     x1, y1 = point1
     x2, y2 = point2
-    return int(np.ceil(np.sqrt((x1-x2)**2 + (y1-y2)**2)))
+    return np.ceil(np.sqrt((x1-x2)**2 + (y1-y2)**2))
     
 
 def calculate_avg_score(gateway_point:tuple, sensor_set:set, distance_threshold:int) -> float:
@@ -100,7 +99,7 @@ def connect_nodes(sensor_set:set, gateway_set:set, distance_threshold:int) -> No
 
         Argunments:
             - sensor_set : `set` set storing the `Sensor` nodes
-            - gateway_set : `set` set stroing the `Gateway` nodes
+            - gateway_set : `set` set storing the `Gateway` nodes
             - distance_threshold : `int` upper limit of distance
             between nodes so that can communicate
     """
@@ -109,3 +108,20 @@ def connect_nodes(sensor_set:set, gateway_set:set, distance_threshold:int) -> No
     
     for gateway in gateway_set:
         gateway.find_covered_sensors(sensor_set, distance_threshold)
+
+
+def get_top_sensors(sensor_set:set, n_sensors:int) -> set:
+    """
+        Description:
+            Gets top `n` sensors with the highest score
+            from the `Sensor` objects placed on `Grid`
+
+        Arguments:
+            - sensor_set : `set` set storing the `Sensor` nodes
+            - n_sensors : `int` number of sensors to get
+
+        Return:
+            - `set` : set of `n` sensors with the highest score
+    """
+    sorted_set = sorted(sensor_set, key = lambda sensor: sensor.get_score(), reverse=True)
+    return sorted_set[:n_sensors]

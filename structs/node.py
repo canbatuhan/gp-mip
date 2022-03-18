@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def calculate_distance(point1:tuple, point2:tuple) -> int:
+def calculate_distance(point1:tuple, point2:tuple) -> float:
     """
         Description:
             Calculates the distance between two points
@@ -11,12 +11,11 @@ def calculate_distance(point1:tuple, point2:tuple) -> int:
             - point2 : `tuple` second point
 
         Returns:
-            - `int` : ceil integer of the calculated
-            (float) distance
+            - `float` : distance between two points
     """
     x1, y1 = point1
     x2, y2 = point2
-    return int(np.ceil(np.sqrt((x1-x2)**2 + (y1-y2)**2)))
+    return np.sqrt((x1-x2)**2 + (y1-y2)**2)
 
 
 class Node:

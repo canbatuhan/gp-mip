@@ -11,31 +11,25 @@ from functions import visualizer
 parser = argparse.ArgumentParser(description='ILP Sensor Clustering - Clustering of sensors using Integer Linear Programming concept')
 parser.add_argument('--size', required=False, default=100, type=int)
 parser.add_argument('--sensor_count', required=False, default=75, type=int)
-parser.add_argument('--distance_threshold', required=False, default=15, type=float)
-parser.add_argument('--max_score', required=False, default=10, type=int)
-parser.add_argument('--min_score', required=False, default=1, type=int)
+parser.add_argument('--distance_threshold', required=False, default=13, type=float)
 
 
 args = vars(parser.parse_args())
 GRID_SIZE = args['size']
 SENSOR_COUNT = args['sensor_count']
 DISTANCE_THRESHOLD = args['distance_threshold']
-MAX_SCORE = args['max_score']
-MIN_SCORE = args['min_score']
 
 
 if __name__=='__main__':
     # ___Random Initializing___
-    grid = Grid(GRID_SIZE)
-    sensor_set = preprocessing.generate_random_sensors(GRID_SIZE, SENSOR_COUNT, MAX_SCORE, MIN_SCORE)
+    #grid = Grid(GRID_SIZE)
+    #sensor_set = preprocessing.generate_random_sensors(GRID_SIZE, SENSOR_COUNT, MAX_SCORE, MIN_SCORE)
     
     # ___Initializing Through File___
-    #grid = Grid(GRID_SIZE)
-    #sensor_set = preprocessing.init_sensors_from_file('docs/input/sensor_locations.tsv')
-    #preprocessing.set_sensor_scores(sensor_set, 'docs/input/sensor_placements.csv')
-    #preprocessing.normalize_sensor_locations(sensor_set, GRID_SIZE)
-    
-    visualizer.show_locations("Sensor", sensor_set, grid, 'docs/output/img/sensor_placement.png')
+    grid = Grid(GRID_SIZE)
+    sensor_set = preprocessing.init_sensors_from_file('docs/input/sensor_locations.tsv')
+    preprocessing.set_sensor_scores(sensor_set, 'docs/input/sensor_placements.csv')
+    preprocessing.normalize_sensor_locations(sensor_set, GRID_SIZE)
 
     # ___Building The Model___
     generated_model, gateway_locations = clustering.generate_model(grid)

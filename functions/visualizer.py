@@ -96,6 +96,11 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:int
         sensor_x_data.append(sensor.get_x())
         sensor_y_data.append(sensor.get_y()) 
 
+    hot_sensor_x_data, hot_sensor_y_data = list(), list()
+    for hot_sensor in helpers.get_top_sensors(sensor_set, 15):
+        hot_sensor_x_data.append(hot_sensor.get_x())
+        hot_sensor_y_data.append(hot_sensor.get_y())
+
     plt.scatter(
         gateway_x_data, gateway_y_data,
         label="Gateways", marker='o', s=50)
@@ -104,9 +109,13 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:int
         sensor_x_data, sensor_y_data,
         label="Sensors", marker='x', s=20)
 
+    plt.scatter(
+        hot_sensor_x_data, hot_sensor_y_data,
+        label="Sensors on Fire!", marker="x", s=20, color='red')
+
     for gateway in gateway_set:
-        gateway_point = (gateway.get_x(), gateway.get_y())
-        for sensor in sensor_set:
+        for sensor in gateway.get_covered_sensors():
+            gateway_point = (gateway.get_x(), gateway.get_y())
             sensor_point = (sensor.get_x(), sensor.get_y())
             if helpers.calculate_distance(gateway_point, sensor_point) <= distance_threshold:
                 x_data = [gateway.get_x(), sensor.get_x()]
@@ -114,7 +123,7 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:int
 
                 plt.plot(
                     x_data, y_data,
-                    color="g", alpha=sensor.get_score()/10,
+                    color="g", alpha=sensor.get_score(),
                     linestyle='-', linewidth=1)
             
     plt.legend()

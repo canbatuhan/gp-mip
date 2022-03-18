@@ -61,7 +61,7 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
 
     neg_avg_score_condition = lambda x1, y1, set : not helpers.calculate_avg_score(
             (x1, y1), set, distance_threshold
-        ) >= 4
+        ) >= 0.3
 
     # Aim is to minimize the total number of gateways
     # covering the sensors placed on the grid

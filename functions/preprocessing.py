@@ -5,7 +5,7 @@ from . import helpers
 from structs import Sensor
 
 
-def generate_random_sensors(size:int, sensor_count:int, max_score:int, min_score:int) -> set:
+def generate_random_sensors(size:int, sensor_count:int) -> set:
     """
         Description:
             Generates sensors with random x and y locations
@@ -27,7 +27,7 @@ def generate_random_sensors(size:int, sensor_count:int, max_score:int, min_score
             id=str(id),
             x=np.random.randint(0, size),
             y=np.random.randint(0, size),
-            score=np.random.randint(min_score, max_score+1))
+            score=np.random.rand())
         sensor_set.add(new_sensor)
 
     return sensor_set
@@ -79,7 +79,7 @@ def init_sensors_from_file(file_path:str) -> set:
                 id=sensor_id,
                 x=long_as_float,
                 y=lat_as_float,
-                score=np.random.rand())
+                score=np.random.rand()*(0.59-0.17)+0.17)
 
             sensor_set.add(new_sensor)
 
@@ -106,7 +106,7 @@ def set_sensor_scores(sensor_set:set, file_path:str) -> None:
             sensor_id = row[1]
             #sensor_number = row[2]
             #sensor_cost = row[3]
-            sensor_score = row[4]
+            sensor_score = float(row[4])
             
             for sensor in sensor_set:
                 if sensor.get_id() == sensor_id:
