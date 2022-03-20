@@ -128,5 +128,5 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:int
             
     plt.legend()
     plt.savefig(file_path)
-    plt.show()
+    #plt.show()
     plt.close()

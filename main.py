@@ -11,7 +11,7 @@ from functions import visualizer
 parser = argparse.ArgumentParser(description='ILP Sensor Clustering - Clustering of sensors using Integer Linear Programming concept')
 parser.add_argument('--size', required=False, default=100, type=int)
 parser.add_argument('--sensor_count', required=False, default=75, type=int)
-parser.add_argument('--distance_threshold', required=False, default=13, type=float)
+parser.add_argument('--distance_threshold', required=False, default=13, type=int)
 
 
 args = vars(parser.parse_args())
@@ -35,7 +35,7 @@ if __name__=='__main__':
     generated_model, gateway_locations = clustering.generate_model(grid)
 
     # ___Developing The Model___
-    developed_model = clustering.develop_model(generated_model, grid,sensor_set, gateway_locations, DISTANCE_THRESHOLD)
+    developed_model = clustering.develop_model(generated_model, grid, sensor_set, gateway_locations, DISTANCE_THRESHOLD)
 
     # ___Optimizing The Model___
     gateway_set = clustering.optimize_model(developed_model, grid, gateway_locations)
@@ -44,10 +44,10 @@ if __name__=='__main__':
     helpers.connect_nodes(sensor_set, gateway_set, DISTANCE_THRESHOLD)
 
     # ___Logging___
-    logger.record_nodes(sensor_set, 'docs/output/log/sensors.txt')
-    logger.record_nodes(gateway_set, 'docs/output/log/gateways.txt')
+    logger.record_nodes(sensor_set, 'docs/output/log/_sensors.txt')
+    logger.record_nodes(gateway_set, f'docs/output/log/{DISTANCE_THRESHOLD}_units_distance_gateways.txt')
 
     # ___Visualization___
-    visualizer.show_locations("Sensor", sensor_set, grid, 'docs/output/img/sensor_placement.png')
-    visualizer.show_locations("Gateway", gateway_set, grid, 'docs/output/img/gateway_placement.png')
-    visualizer.show_grid(sensor_set, gateway_set, grid, DISTANCE_THRESHOLD, 'docs/output/img/grid.png')
+    visualizer.show_locations("Sensor", sensor_set, grid, 'docs/output/img/_sensor_placement.png')
+    #visualizer.show_locations("Gateway", gateway_set, grid, f'docs/output/img/{DISTANCE_THRESHOLD}_units_distance_gateway_placement.png')
+    visualizer.show_grid(sensor_set, gateway_set, grid, DISTANCE_THRESHOLD, f'docs/output/img/{DISTANCE_THRESHOLD}_units_distance_grid.png')

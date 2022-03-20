@@ -54,11 +54,11 @@ def calculate_distance(point1:tuple, point2:tuple) -> float:
             - point2 : `tuple` second point
 
         Returns:
-            - `int` : distance between two points
+            - `float` : distance between two points
     """
     x1, y1 = point1
     x2, y2 = point2
-    return np.ceil(np.sqrt((x1-x2)**2 + (y1-y2)**2))
+    return np.sqrt((x1-x2)**2 + (y1-y2)**2)
     
 
 def calculate_avg_score(gateway_point:tuple, sensor_set:set, distance_threshold:int) -> float:
