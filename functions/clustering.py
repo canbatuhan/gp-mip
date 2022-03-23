@@ -67,24 +67,22 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
     # covering the sensors placed on the grid
     model.objective = mip.model.minimize(
         mip.model.xsum(
-            gateway_locations[gateway_y][gateway_x] * int(distance_condition(
-                sensor.get_x(), sensor.get_y(), gateway_x, gateway_y))
+            gateway_locations[gateway_y][gateway_x]
             for gateway_x in grid.get_width_as_range()
-            for gateway_y in grid.get_height_as_range()
-            for sensor in sensor_set))
+            for gateway_y in grid.get_height_as_range()))
 
     # A constraint for the model is that a sensor must be
-    # covered by at least 1 gateway
+    # covered exactly 1 Gateway
     for sensor in sensor_set:
         model.add_constr(mip.model.xsum(
             gateway_locations[gateway_y][gateway_x] * int(distance_condition(
                 sensor.get_x(), sensor.get_y(), gateway_x, gateway_y))
             for gateway_x in grid.get_width_as_range()
-            for gateway_y in grid.get_height_as_range()) >= 1)
+            for gateway_y in grid.get_height_as_range()) == 1)
 
     # A constraint for the model is that the average score
     # of the sensors covered by the same gateway should
-    # be at least 4 (maximum : 10)
+    # be at least 0.25 (maximum : 1)
     model.add_constr(mip.model.xsum(
         gateway_locations[gateway_y][gateway_x] * int(neg_avg_score_condition(
             gateway_x, gateway_y, sensor_set))
