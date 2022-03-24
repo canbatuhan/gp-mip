@@ -97,7 +97,7 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:int
         sensor_y_data.append(sensor.get_y()) 
 
     hot_sensor_x_data, hot_sensor_y_data = list(), list()
-    for hot_sensor in helpers.get_top_sensors(sensor_set, 15):
+    for hot_sensor in helpers.get_top_sensors(sensor_set, 10):
         hot_sensor_x_data.append(hot_sensor.get_x())
         hot_sensor_y_data.append(hot_sensor.get_y())
 
