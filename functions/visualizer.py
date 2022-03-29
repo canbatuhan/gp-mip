@@ -57,7 +57,7 @@ def show_locations(node_type:str, node_set:set, grid:Grid, file_path:str) -> Non
     plt.close()
 
 
-def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:int, file_path:str) -> None:
+def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:float, file_path:str) -> None:
     """
         Description:
             Visualizes the sensors and gateways on the same grid
@@ -68,7 +68,7 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:int
             - grid : `Grid` grid that the nodes are located on
             - sensor_set : `set` set storing the `Sensor` nodes
             - gateway_set : `set` set storing the `Gateway` nodes
-            - distance_threshold : `int` upper limit of distance
+            - distance_threshold : `float` upper limit of distance
             between nodes so that can communicate
             - file_path : `str` file to save figure into
     """

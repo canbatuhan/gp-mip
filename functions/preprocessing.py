@@ -79,7 +79,7 @@ def init_sensors_from_file(file_path:str) -> set:
                 id=sensor_id,
                 x=long_as_float,
                 y=lat_as_float,
-                score=np.random.rand()*(0.41-0.17)+0.17)
+                score=0.2)
 
             sensor_set.add(new_sensor)
 

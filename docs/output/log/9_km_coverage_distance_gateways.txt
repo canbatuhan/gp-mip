@@ -1,0 +1,15 @@
+id=7	x=100	y=38	total_score=1.6199999999999999	avg_score=0.40499999999999997
+id=12	x=40	y=55	total_score=1.34	avg_score=0.22333333333333336
+id=0	x=42	y=4	total_score=0.4	avg_score=0.2
+id=8	x=34	y=43	total_score=1.0	avg_score=0.2
+id=5	x=75	y=30	total_score=1.76	avg_score=0.25142857142857145
+id=6	x=20	y=36	total_score=1.16	avg_score=0.23199999999999998
+id=13	x=61	y=55	total_score=2.18	avg_score=0.2725
+id=2	x=5	y=18	total_score=0.6000000000000001	avg_score=0.20000000000000004
+id=9	x=73	y=43	total_score=3.48	avg_score=0.348
+id=14	x=53	y=95	total_score=0.77	avg_score=0.25666666666666665
+id=4	x=89	y=28	total_score=1.99	avg_score=0.33166666666666667
+id=10	x=87	y=43	total_score=1.07	avg_score=0.2675
+id=1	x=65	y=13	total_score=0.78	avg_score=0.39
+id=11	x=51	y=44	total_score=1.8299999999999998	avg_score=0.22874999999999998
+id=3	x=44	y=18	total_score=0.4	avg_score=0.2

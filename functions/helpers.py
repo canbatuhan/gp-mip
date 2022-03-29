@@ -61,7 +61,7 @@ def calculate_distance(point1:tuple, point2:tuple) -> float:
     return np.sqrt((x1-x2)**2 + (y1-y2)**2)
     
 
-def calculate_avg_score(gateway_point:tuple, sensor_set:set, distance_threshold:int) -> float:
+def calculate_avg_score(gateway_point:tuple, sensor_set:set, distance_threshold:float) -> float:
     """
         Description:
             Calculates the average score of the sensors
@@ -70,7 +70,7 @@ def calculate_avg_score(gateway_point:tuple, sensor_set:set, distance_threshold:
         Arguments:
             - gateway_point : `tuple` location of the `Gateway`
             - sensor_set : `set` set storing `Sensor` nodes
-            - distance_threshold : `int` upper limit of distance
+            - distance_threshold : `float` upper limit of distance
             between nodes so that can communicate
 
         Return:
@@ -91,7 +91,7 @@ def calculate_avg_score(gateway_point:tuple, sensor_set:set, distance_threshold:
     else: return total_score/n_sensor_covered
 
 
-def connect_nodes(sensor_set:set, gateway_set:set, distance_threshold:int) -> None:
+def connect_nodes(sensor_set:set, gateway_set:set, distance_threshold:float) -> None:
     """
         Description:
             Connects the `Sensor` objects and `Gateway` objects
@@ -100,7 +100,7 @@ def connect_nodes(sensor_set:set, gateway_set:set, distance_threshold:int) -> No
         Argunments:
             - sensor_set : `set` set storing the `Sensor` nodes
             - gateway_set : `set` set storing the `Gateway` nodes
-            - distance_threshold : `int` upper limit of distance
+            - distance_threshold : `float` upper limit of distance
             between nodes so that can communicate
     """
     for sensor in sensor_set:

@@ -25,7 +25,7 @@ class Node:
         self.__y = y
         self.__covered_nodes = set()
 
-    def find_covered_nodes(self, node_set:set, distance_threshold:int) -> None:
+    def find_covered_nodes(self, node_set:set, distance_threshold:float) -> None:
         for node in node_set:
             point = (self.__x, self.__y)
             node_point = (node.get_x(), node.get_y())
@@ -61,7 +61,7 @@ class Sensor(Node):
         return "id={}\tx={}\ty={}\tscore={}".format(
             self.get_id(), self.get_x(), self.get_y(), self.__score)
 
-    def find_covered_gateways(self, gateway_set:set, distance_threshold:int) -> None:
+    def find_covered_gateways(self, gateway_set:set, distance_threshold:float) -> None:
         self.find_covered_nodes(gateway_set, distance_threshold)
 
     def get_covered_gateways(self) -> set:
@@ -90,7 +90,7 @@ class Gateway(Node):
             total_score += sensor.get_score()
         return total_score, total_score / len(covered_sensors)
 
-    def find_covered_sensors(self, sensor_set:set, distance_threshold:int) -> None:
+    def find_covered_sensors(self, sensor_set:set, distance_threshold:float) -> None:
         self.find_covered_nodes(sensor_set, distance_threshold)
 
     def get_covered_sensors(self) -> set:

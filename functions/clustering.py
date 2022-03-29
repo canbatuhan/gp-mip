@@ -35,7 +35,7 @@ def generate_model(grid:Grid) -> tuple:
     return model, gateway_locations
 
 
-def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_locations:list, distance_threshold:int) -> mip.model.Model:
+def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_locations:list, distance_threshold:float) -> mip.model.Model:
     """
         Description:
             Develops the model by adding objectives and
@@ -48,7 +48,7 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
             - sensor_set : `set` set storing the `Sensor` nodes
             - gateway_locations : `list` locations that are proper
             for placing the gateway
-            - distance_threshold : `int` upper limit of distance
+            - distance_threshold : `float` upper limit of distance
             between nodes so that can communicate
 
         Return:
@@ -61,7 +61,7 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
 
     neg_avg_score_condition = lambda x1, y1, set : not helpers.calculate_avg_score(
             (x1, y1), set, distance_threshold
-        ) >= 0.25
+        ) >= 0.15
 
     # Aim of the model is to minimize the total number of gateways
     # covering the sensors placed on the grid

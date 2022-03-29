@@ -1,0 +1,17 @@
+id=16	x=53	y=98	total_score=0.56	avg_score=0.28
+id=7	x=22	y=41	total_score=1.16	avg_score=0.23199999999999998
+id=12	x=31	y=52	total_score=1.0	avg_score=0.2
+id=0	x=40	y=5	total_score=0.4	avg_score=0.2
+id=8	x=69	y=42	total_score=2.6799999999999997	avg_score=0.33499999999999996
+id=5	x=10	y=29	total_score=0.4	avg_score=0.2
+id=6	x=75	y=30	total_score=1.29	avg_score=0.215
+id=13	x=60	y=53	total_score=2.13	avg_score=0.23666666666666666
+id=2	x=41	y=18	total_score=0.4	avg_score=0.2
+id=9	x=81	y=42	total_score=2.14	avg_score=0.3566666666666667
+id=14	x=47	y=57	total_score=1.58	avg_score=0.316
+id=4	x=93	y=28	total_score=2.19	avg_score=0.31285714285714283
+id=10	x=95	y=43	total_score=1.6199999999999999	avg_score=0.40499999999999997
+id=15	x=46	y=85	total_score=0.21	avg_score=0.21
+id=1	x=6	y=16	total_score=0.4	avg_score=0.2
+id=11	x=47	y=44	total_score=1.44	avg_score=0.2057142857142857
+id=3	x=65	y=18	total_score=0.78	avg_score=0.39
