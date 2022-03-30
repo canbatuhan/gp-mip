@@ -11,7 +11,7 @@ from functions import visualizer
 parser = argparse.ArgumentParser(description='ILP Sensor Clustering - Clustering of sensors using Integer Linear Programming concept')
 parser.add_argument('--size', required=False, default=100, type=int)
 parser.add_argument('--sensor_count', required=False, default=75, type=int)
-parser.add_argument('--distance_threshold', required=False, default=42, type=int)
+parser.add_argument('--distance_threshold', required=False, default=10, type=int)
 
 
 args = vars(parser.parse_args())
@@ -26,7 +26,7 @@ if __name__=='__main__':
     #grid = Grid(GRID_SIZE)
     #sensor_set = preprocessing.generate_random_sensors(GRID_SIZE, SENSOR_COUNT, MAX_SCORE, MIN_SCORE)
     
-    # ___Initializing Through File___
+    # ___Initializing From File___
     grid = Grid(GRID_SIZE)
     sensor_set = preprocessing.init_sensors_from_file('docs/input/sensor_locations.tsv')
     preprocessing.set_sensor_scores(sensor_set, 'docs/input/sensor_placements.csv')

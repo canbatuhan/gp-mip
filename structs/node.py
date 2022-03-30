@@ -19,10 +19,11 @@ def calculate_distance(point1:tuple, point2:tuple) -> float:
 
 
 class Node:
-    def __init__(self, id:str, x:int, y:int) -> None:
+    def __init__(self, id:str, x:float, y:float, z:float) -> None:
         self.__id = id
         self.__x = x
         self.__y = y
+        self.__z = z
         self.__covered_nodes = set()
 
     def find_covered_nodes(self, node_set:set, distance_threshold:float) -> None:
@@ -36,25 +37,25 @@ class Node:
     def get_id(self) -> str:
         return self.__id
 
-    def get_x(self) -> int:
+    def get_x(self) -> float:
         return self.__x
 
-    def get_y(self) -> int:
+    def get_y(self) -> float:
         return self.__y
 
     def get_covered_nodes(self) -> set:
         return self.__covered_nodes
 
-    def set_x(self, x:int) -> None:
+    def set_x(self, x:float) -> None:
         self.__x = x
 
-    def set_y(self, y:int) -> None:
+    def set_y(self, y:float) -> None:
         self.__y = y
 
 
 class Sensor(Node):
-    def __init__(self, id:str, x:int, y:int, score:float=0.0) -> None:
-        super().__init__(id, x, y)
+    def __init__(self, id:str, x:float, y:float, z:float, score:float=0.0) -> None:
+        super().__init__(id, x, y, z)
         self.__score = score
 
     def __str__(self) -> str:
@@ -75,8 +76,8 @@ class Sensor(Node):
 
 
 class Gateway(Node):
-    def __init__(self, id:str, x:int, y:int) -> None:
-        super().__init__(id, x, y)
+    def __init__(self, id:str, x:float, y:float, z:float) -> None:
+        super().__init__(id, x, y, z)
 
     def __str__(self) -> str:
         total_score, average_score = self.__calc_scores()
@@ -96,7 +97,7 @@ class Gateway(Node):
     def get_covered_sensors(self) -> set:
         return self.get_covered_nodes()
 
-    def get_total_score(self) -> int:
+    def get_total_score(self) -> float:
         return self.__calc_scores()[0]
 
     def get_average_score(self) -> float:

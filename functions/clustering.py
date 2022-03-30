@@ -117,7 +117,8 @@ def optimize_model(model:mip.model.Model, grid:Grid, gateway_locations:list) -> 
                     new_gateway = Gateway(
                         id=str(gateway_id),
                         x=gateway_x,
-                        y=gateway_y)
+                        y=gateway_y,
+                        z=0)
                     gateway_set.add(new_gateway)
                     gateway_id += 1      
     

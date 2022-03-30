@@ -61,7 +61,7 @@ def init_sensors_from_file(file_path:str) -> set:
             sensor_id = row[0]
             latitude = row[1] # for example 41°47'30.7"
             longitude = row[2] # for example 27°16'37.9"
-            #elevation = row[3]
+            elevation = row[3]
 
             long_as_float = helpers.convert_to_float(
                 raw_data=longitude,
@@ -79,7 +79,8 @@ def init_sensors_from_file(file_path:str) -> set:
                 id=sensor_id,
                 x=long_as_float,
                 y=lat_as_float,
-                score=0.2)
+                z=elevation,
+                score=0.25)
 
             sensor_set.add(new_sensor)
 
