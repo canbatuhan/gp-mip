@@ -1,10 +1,10 @@
 import argparse
 
 from structs import Grid
-from functions import clustering
 from functions import helpers
-from functions import logger
 from functions import preprocessing
+from functions import clustering
+from functions import postprocessing
 from functions import visualizer
 
 
@@ -26,29 +26,25 @@ if __name__=='__main__':
     #grid = Grid(GRID_SIZE)
     #sensor_set = preprocessing.generate_random_sensors(GRID_SIZE, SENSOR_COUNT, MAX_SCORE, MIN_SCORE)
     
-    # ___Initializing From File___
+    # ___Pre-processing___
     grid = Grid(GRID_SIZE)
     sensor_set = preprocessing.init_sensors_from_file('docs/input/sensor_locations.tsv')
     preprocessing.set_sensor_scores(sensor_set, 'docs/input/sensor_placements.csv')
-    preprocessing.normalize_sensor_locations(sensor_set, GRID_SIZE)
+    extreme_longitude, extreme_latitude = preprocessing.normalize_sensor_locations(sensor_set, GRID_SIZE)
 
-    # ___Building The Model___
+    # ___Optimization___
     generated_model, gateway_locations = clustering.generate_model(grid)
-
-    # ___Developing The Model___
     developed_model = clustering.develop_model(generated_model, grid, sensor_set, gateway_locations, DISTANCE_THRESHOLD_UNIT)
-
-    # ___Optimizing The Model___
     gateway_set = clustering.optimize_model(developed_model, grid, gateway_locations)
-
-    # ___Connecting Sensors and Gateways___
-    helpers.connect_nodes(sensor_set, gateway_set, DISTANCE_THRESHOLD_UNIT)
-
-    # ___Logging___
-    logger.record_nodes(sensor_set, 'docs/output/log/_sensors.txt')
-    logger.record_nodes(gateway_set, f'docs/output/log/{DISTANCE_THRESHOLD_KM}_km_coverage_distance_gateways.txt')
-
+    
     # ___Visualization___
     visualizer.show_locations("Sensor", sensor_set, grid, 'docs/output/img/_sensor_placement.png')
     #visualizer.show_locations("Gateway", gateway_set, grid, f'docs/output/img/{DISTANCE_THRESHOLD}_units_distance_gateway_placement.png')
     visualizer.show_grid(sensor_set, gateway_set, grid, DISTANCE_THRESHOLD_UNIT, f'docs/output/img/{DISTANCE_THRESHOLD_KM}_km_coverage_distance_grid.png')
+
+    # ___Post-processing___
+    postprocessing.connect_nodes(sensor_set, gateway_set, DISTANCE_THRESHOLD_UNIT)
+    postprocessing.set_gateway_elevations(gateway_set)
+    postprocessing.denormalize_locations(sensor_set, gateway_set, GRID_SIZE, extreme_longitude, extreme_latitude)
+    postprocessing.record_nodes(sensor_set, f'docs/output/log/_sensors.txt')
+    postprocessing.record_nodes(gateway_set, f'docs/output/log/{DISTANCE_THRESHOLD_KM}_km_coverage_distance_gateways.txt')

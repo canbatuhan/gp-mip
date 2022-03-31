@@ -15,7 +15,7 @@ def generate_model(grid:Grid) -> tuple:
         Arguments:
             - grid : `Grid` grid that the sensors are located on
 
-        Return:
+        Returns:
             - `mip.model.Model` : raw model
             - `list` : locations that are proper for placing the gateway
     """
@@ -51,7 +51,7 @@ def develop_model(model:mip.model.Model, grid:Grid, sensor_set:set, gateway_loca
             - distance_threshold : `float` upper limit of distance
             between nodes so that can communicate
 
-        Return:
+        Returns:
             - `mip.model.Model` : model that is developed by objectives
             and constraints
     """
@@ -99,11 +99,12 @@ def optimize_model(model:mip.model.Model, grid:Grid, gateway_locations:list) -> 
         
         Arguments:
             - model : `mip.model.Model` model to optimize
+            - sensor_set : `set` set storing `Sensor` objects
             - grid : `Grid` grid that the nodes are located on
             - gateway_locations : `list` locations that are proper
             for placing the gateway
 
-        Return:
+        Returns:
             - `set` : set storing the `Gateway` nodes
     """
     gateway_set = set()

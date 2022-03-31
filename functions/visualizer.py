@@ -14,7 +14,7 @@ def generate_circle(center:tuple, radius:int) -> tuple:
             - center : `tuple` center location of the circle
             - radius : `int` radiues of the center
 
-        Return:
+        Returns:
             - `np.ndarray` : circle-plot data on x axis
             - `np.ndarray` : circle-plot data on y axis
     """
@@ -114,7 +114,7 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:flo
         label="Sensors on Fire!", marker="x", s=20, color='red')
 
     for gateway in gateway_set:
-        for sensor in gateway.get_covered_sensors():
+        for sensor in sensor_set:
             gateway_point = (gateway.get_x(), gateway.get_y())
             sensor_point = (sensor.get_x(), sensor.get_y())
             if helpers.calculate_distance(gateway_point, sensor_point) <= distance_threshold:

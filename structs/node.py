@@ -43,6 +43,9 @@ class Node:
     def get_y(self) -> float:
         return self.__y
 
+    def get_z(self) -> float:
+        return self.__z
+
     def get_covered_nodes(self) -> set:
         return self.__covered_nodes
 
@@ -52,15 +55,14 @@ class Node:
     def set_y(self, y:float) -> None:
         self.__y = y
 
+    def set_z(self, z:float) -> None:
+        self.__z = z
+
 
 class Sensor(Node):
     def __init__(self, id:str, x:float, y:float, z:float, score:float=0.0) -> None:
         super().__init__(id, x, y, z)
         self.__score = score
-
-    def __str__(self) -> str:
-        return "id={}\tx={}\ty={}\tscore={}".format(
-            self.get_id(), self.get_x(), self.get_y(), self.__score)
 
     def find_covered_gateways(self, gateway_set:set, distance_threshold:float) -> None:
         self.find_covered_nodes(gateway_set, distance_threshold)
@@ -78,11 +80,6 @@ class Sensor(Node):
 class Gateway(Node):
     def __init__(self, id:str, x:float, y:float, z:float) -> None:
         super().__init__(id, x, y, z)
-
-    def __str__(self) -> str:
-        total_score, average_score = self.__calc_scores()
-        return "id={}\tx={}\ty={}\ttotal_score={}\tavg_score={}".format(
-            self.get_id(), self.get_x(), self.get_y(), total_score, average_score)
 
     def __calc_scores(self) -> tuple:
         total_score = 0

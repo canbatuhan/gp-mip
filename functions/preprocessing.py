@@ -17,7 +17,7 @@ def generate_random_sensors(size:int, sensor_count:int) -> set:
             - max_score : `int` maximum score a `Sensor` can have
             - min_score : `int` minimum score a `Sensor` can have
 
-        Return:
+        Returns:
             - `set` : set storing the `Sensor` nodes
     """
     sensor_set = set()
@@ -43,13 +43,13 @@ def init_sensors_from_file(file_path:str) -> set:
         Arguments:
             - file_path : `str` path of the input file
 
-        Return:
+        Returns:
             - `set` : set storing `Sensor` objects
     """
     SECONDS_DELIMITER = '"'
     MINUTES_DELIMITER = '\''
     DEGREES_DELIMITER = 'Â°' # in Windows
-    # DEGREES_DELIMITER = '°' # in Linux
+    #DEGREES_DELIMITER = '°' # in Linux
     
     sensor_set = set()
 
@@ -79,7 +79,7 @@ def init_sensors_from_file(file_path:str) -> set:
                 id=sensor_id,
                 x=long_as_float,
                 y=lat_as_float,
-                z=elevation,
+                z=float(elevation),
                 score=0.25)
 
             sensor_set.add(new_sensor)
@@ -91,8 +91,6 @@ def set_sensor_scores(sensor_set:set, file_path:str) -> None:
     """
         Description:
             Sets the scores of some `Sensor` objects.
-            TODO : There are some sensors without score,
-            random scores will be assigned to these sensors
 
         Arguments:
             - sensor_set : `set` set storing `Sensor` objects
@@ -114,7 +112,7 @@ def set_sensor_scores(sensor_set:set, file_path:str) -> None:
                     sensor.set_score(sensor_score)
 
 
-def normalize_sensor_locations(sensor_set:set, grid_size:int) -> None:
+def normalize_sensor_locations(sensor_set:set, grid_size:int) -> tuple:
     """
         Description:
             Normalizes the location data of `Sensor` objects,
@@ -123,10 +121,16 @@ def normalize_sensor_locations(sensor_set:set, grid_size:int) -> None:
         Arguments:
             - sensor_set : `set` set storing the `Sensor` objects
             - grid_size : `int` size to normalize the location data
+
+        Returns:
+            - `tuple` : maximum and minimum longitude and latitude data
     """
     max_x, max_y, min_x, min_y = helpers.get_max_min_locations(sensor_set)
+
     for sensor in sensor_set:
         new_x = grid_size*(sensor.get_x()-min_x)/(max_x-min_x)
         new_y = grid_size*(sensor.get_y()-min_y)/(max_y-min_y)
         sensor.set_x(new_x)
         sensor.set_y(new_y)
+
+    return (max_x, min_x), (max_y, min_y)

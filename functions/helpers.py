@@ -13,6 +13,9 @@ def convert_to_float(raw_data:str, sec_delim:str, min_delim:str, deg_delim:str) 
             - sec_delim : `str` delimiter char for seconds
             - min_delim : `str` delimiter char for minutes
             - deg_delim : `str` delimiter char for degrees
+
+        Returns:
+            `float` : degree value
     """
     seconds = float(raw_data.rsplit(min_delim)[-1].rsplit(sec_delim)[0])
     minutes = float(raw_data.rsplit(deg_delim)[-1].rsplit(min_delim)[0])
@@ -29,7 +32,7 @@ def get_max_min_locations(sensor_set:set) -> tuple:
         Arguments:
             - sensor_set : `set` set storing the `Sensor` objects
 
-        Return:
+        Returns:
             `tuple` : maximum and minimum x and y data
     """
     max_x, max_y, min_x, min_y = 0, 0, sys.maxsize, sys.maxsize
@@ -73,7 +76,7 @@ def calculate_avg_score(gateway_point:tuple, sensor_set:set, distance_threshold:
             - distance_threshold : `float` upper limit of distance
             between nodes so that can communicate
 
-        Return:
+        Returns:
             - `float` : average score of `Sensor` nodes
     """
     total_score = 0
@@ -91,25 +94,6 @@ def calculate_avg_score(gateway_point:tuple, sensor_set:set, distance_threshold:
     else: return total_score/n_sensor_covered
 
 
-def connect_nodes(sensor_set:set, gateway_set:set, distance_threshold:float) -> None:
-    """
-        Description:
-            Connects the `Sensor` objects and `Gateway` objects
-            with each other to analyse the model performance
-
-        Argunments:
-            - sensor_set : `set` set storing the `Sensor` nodes
-            - gateway_set : `set` set storing the `Gateway` nodes
-            - distance_threshold : `float` upper limit of distance
-            between nodes so that can communicate
-    """
-    for sensor in sensor_set:
-        sensor.find_covered_gateways(gateway_set, distance_threshold)
-    
-    for gateway in gateway_set:
-        gateway.find_covered_sensors(sensor_set, distance_threshold)
-
-
 def get_top_sensors(sensor_set:set, n_sensors:int) -> set:
     """
         Description:
@@ -120,8 +104,32 @@ def get_top_sensors(sensor_set:set, n_sensors:int) -> set:
             - sensor_set : `set` set storing the `Sensor` nodes
             - n_sensors : `int` number of sensors to get
 
-        Return:
+        Returns:
             - `set` : set of `n` sensors with the highest score
     """
     sorted_set = sorted(sensor_set, key = lambda sensor: sensor.get_score(), reverse=True)
     return sorted_set[:n_sensors]
+
+
+def convert_to_coordinate(raw_data:float, sec_delim:str, min_delim:str, deg_delim:str) -> str:
+    """
+        Description:
+            Converts converts float value to the geographical data
+            (for example, 27°16'37.9")
+
+        Arguments:
+            - raw_data : `float` value as degree
+            - sec_delim : `str` delimiter char for seconds
+            - min_delim : `str` delimiter char for minutes
+            - deg_delim : `str` delimiter char for degrees
+
+        Returns:
+            `str` : geographical data as string
+    """
+    degrees = int(raw_data)
+    minutes_float = (raw_data-degrees)*60
+    minutes = int(minutes_float)
+    seconds_float = (minutes_float-minutes)*60
+    seconds = round(seconds_float, 1)
+    return str(degrees) + deg_delim + str(minutes) + min_delim + str(seconds) + sec_delim
+    
