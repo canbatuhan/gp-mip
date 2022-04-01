@@ -20,7 +20,7 @@ def connect_nodes(sensor_set:set, gateway_set:set, distance_threshold:float) -> 
         gateway.find_covered_sensors(sensor_set, distance_threshold)
 
 
-def denormalize_locations(sensor_set:set, gateway_set:set, grid_size:int, longitude:tuple, latitude:tuple) -> None:
+def denormalize_locations(sensor_set:set, gateway_set:set, grid_size:int, longitude:tuple, latitude:tuple) -> tuple:
     """
         Descriptipn:
             Denormalizes the location data of `Sensor` objects,
@@ -32,6 +32,9 @@ def denormalize_locations(sensor_set:set, gateway_set:set, grid_size:int, longit
             - grid_size : `int` size of the grid
             - longitude : `tuple` maximum and minimum longitude values
             - latitude : `tuple` maximum and minimum latitude values
+
+        Returns:
+            - `tuple` : maximum and minimum longitude and latitude data
     """
     max_long, min_long = longitude
     max_lat, min_lat = latitude
@@ -86,17 +89,17 @@ def record_nodes(node_set:set, file_path:str) -> None:
 
     with open(file_path, 'w') as file:
         for node in node_set:
-            """latitude = helpers.convert_to_coordinate(
+            latitude = helpers.convert_to_coordinate(
                 raw_data=node.get_y(),
                 sec_delim=SECONDS_DELIMITER,
                 min_delim=MINUTES_DELIMITER,
-                deg_delim=DEGREES_DELIMITER)"""
+                deg_delim=DEGREES_DELIMITER)
 
-            """longitude = helpers.convert_to_coordinate(
+            longitude = helpers.convert_to_coordinate(
                 raw_data=node.get_x(),
                 sec_delim=SECONDS_DELIMITER,
                 min_delim=MINUTES_DELIMITER,
-                deg_delim=DEGREES_DELIMITER)"""
+                deg_delim=DEGREES_DELIMITER)
             
             file.write('{}\t{}\t{}\t{}\n'.format(
                 node.get_id(), node.get_y(), node.get_x(), node.get_z()))

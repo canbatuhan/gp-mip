@@ -6,7 +6,8 @@ echo "Unit Distance in the Grid ~ 1.17 km"
 echo "----------------------------------------------------------"
 echo ""
 
-MAX_RANGE = 10
+DISTANCE_THRESHOLD=1
+MAX_RANGE=10
 while [ $DISTANCE_THRESHOLD -le $MAX_RANGE ]
 do
     echo "----------------------------------------------------------"
@@ -15,5 +16,5 @@ do
     python main.py --distance_threshold=$DISTANCE_THRESHOLD
     echo ""
 
-    DISTANCE_THRESHOLD = DISTANCE_THRESHOLD + 1
+    DISTANCE_THRESHOLD=$((DISTANCE_THRESHOLD+1))
 done
