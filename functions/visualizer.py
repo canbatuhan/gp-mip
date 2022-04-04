@@ -57,7 +57,7 @@ def show_locations(node_type:str, node_set:set, grid:Grid, file_path:str) -> Non
     plt.close()
 
 
-def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:float, file_path:str) -> None:
+def show_grid(top_n:int, sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:float, file_path:str) -> None:
     """
         Description:
             Visualizes the sensors and gateways on the same grid
@@ -65,9 +65,10 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:flo
             saves the figure
 
         Arguments:
-            - grid : `Grid` grid that the nodes are located on
+            - top_n : `int` number of sensors to take
             - sensor_set : `set` set storing the `Sensor` nodes
             - gateway_set : `set` set storing the `Gateway` nodes
+            - grid : `Grid` grid that the nodes are located on
             - distance_threshold : `float` upper limit of distance
             between nodes so that can communicate
             - file_path : `str` file to save figure into
@@ -97,7 +98,7 @@ def show_grid(sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:flo
         sensor_y_data.append(sensor.get_y()) 
 
     hot_sensor_x_data, hot_sensor_y_data = list(), list()
-    for hot_sensor in helpers.get_top_sensors(sensor_set, 10):
+    for hot_sensor in helpers.get_top_sensors(sensor_set, top_n):
         hot_sensor_x_data.append(hot_sensor.get_x())
         hot_sensor_y_data.append(hot_sensor.get_y())
 

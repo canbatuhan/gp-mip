@@ -103,3 +103,27 @@ def record_nodes(node_set:set, file_path:str) -> None:
             
             file.write('{}\t{}\t{}\t{}\n'.format(
                 node.get_id(), node.get_y(), node.get_x(), node.get_z()))
+
+
+def gateway_with_top_sensors( top_n:int, sensor_set:set, gateway_set:set, file_path:str) -> None:
+    """
+        Description:
+            Records the gateways covering the top `n`
+            sensors, according to their scores
+
+        Arguments:
+            - top_n : `int` number of sensors to take
+            - sensor_set : `set` set storing `Sensor` objects
+            - gateway_set : `set` set storing `Gateway` objects
+            - file_path : `str` file to write into
+    """
+
+    top_sensors = helpers.get_top_sensors(sensor_set, top_n)
+
+    with open(file_path, 'w') as file:
+        for gateway in gateway_set:
+            for sensor in gateway.get_covered_sensors():
+                if sensor in top_sensors:
+                    file.write('{}\t{}\t{}\t{}\n'.format(
+                        gateway.get_id(), gateway.get_y(), gateway.get_x(), gateway.get_z()))
+                    break
