@@ -24,11 +24,11 @@ TOP_N_SENSORS = args['top_n_sensors']
 
 # File Paths
 SENSOR_PLACEMENT_PATH = 'docs/output/img/_sensor_placement.png'
-GRID_PATH = f'docs/output/img/{int(DISTANCE_THRESHOLD_KM)}_km_coverage_grid.png'
+GRID_PATH = f'docs/output/img/top_{TOP_N_SENSORS}_sensors/{int(DISTANCE_THRESHOLD_KM)}_km_coverage_grid.png'
 SENSOR_LOG_PATH_UNIT = 'docs/output/log_unit/_sensors_unit.txt'
-GATEWAY_LOG_PATH_UNIT = f'docs/output/log_unit/{int(DISTANCE_THRESHOLD_KM)}_km_coverage_gateways_unit.txt'
+GATEWAY_LOG_PATH_UNIT = f'docs/output/log_unit/top_{TOP_N_SENSORS}_sensors/{int(DISTANCE_THRESHOLD_KM)}_km_coverage_gateways_unit.txt'
 SENSOR_LOG_PATH_COOR = 'docs/output/log_coor/_sensors_coor.txt'
-GATEWAY_LOG_PATH_COOR = f'docs/output/log_coor/{int(DISTANCE_THRESHOLD_KM)}_km_coverage_gateways_coor.txt'
+GATEWAY_LOG_PATH_COOR = f'docs/output/log_coor/top_{TOP_N_SENSORS}_sensors/{int(DISTANCE_THRESHOLD_KM)}_km_coverage_gateways_coor.txt'
 
 # Main Program
 if __name__=='__main__':

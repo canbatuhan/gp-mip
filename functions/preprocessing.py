@@ -80,7 +80,7 @@ def init_sensors_from_file(file_path:str) -> set:
                 x=long_as_float,
                 y=lat_as_float,
                 z=float(elevation),
-                score=0.25)
+                score=0.15)
 
             sensor_set.add(new_sensor)
 
