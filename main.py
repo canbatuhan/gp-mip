@@ -1,4 +1,5 @@
 import argparse
+import math
 
 from structs import Grid
 from functions import preprocessing
@@ -7,15 +8,17 @@ from functions import postprocessing
 from functions import visualizer
 
 parser = argparse.ArgumentParser(description='ILP Sensor Clustering - Clustering of sensors using Integer Linear Programming concept')
+parser.add_argument('--grid_size', required=False, default=100, type=int)
 parser.add_argument('--distance_threshold', required=False, default=10.0, type=float)
 parser.add_argument('--score_threshold', required=False, default=0.15, type=float)
 parser.add_argument('--top_n_sensors', required=False, default=15, type=int)
 
 # Parsing Arguments
 args = vars(parser.parse_args())
-GRID_SIZE = 100
+MAX_DISTANCE = 165 # km
+GRID_SIZE = args['grid_size']
 DISTANCE_THRESHOLD_KM = args['distance_threshold']
-DISTANCE_THRESHOLD = args['distance_threshold']/1.17 # km to unit ditance (for 100x100 grid)
+DISTANCE_THRESHOLD = args['distance_threshold']/(MAX_DISTANCE/(GRID_SIZE*math.sqrt(2))) # km to unit distance
 SCORE_THRESHOLD = args['score_threshold']
 TOP_N_SENSORS = args['top_n_sensors']
 
@@ -25,7 +28,7 @@ GRID_PATH = f'docs/output/img/{int(DISTANCE_THRESHOLD_KM)}_km_coverage_grid.png'
 SENSOR_LOG_PATH_UNIT = 'docs/output/log_unit/_sensors_unit.txt'
 GATEWAY_LOG_PATH_UNIT = f'docs/output/log_unit/{int(DISTANCE_THRESHOLD_KM)}_km_coverage_gateways_unit.txt'
 SENSOR_LOG_PATH_COOR = 'docs/output/log_coor/_sensors_coor.txt'
-GATEWAY_LOG_PATH_COOR = f'docs/output/log_coor/{int(DISTANCE_THRESHOLD_KM)}_km_coverage_gateways_unit.txt'
+GATEWAY_LOG_PATH_COOR = f'docs/output/log_coor/{int(DISTANCE_THRESHOLD_KM)}_km_coverage_gateways_coor.txt'
 
 # Main Program
 if __name__=='__main__':
@@ -51,7 +54,7 @@ if __name__=='__main__':
     postprocessing.record_nodes(sensor_set, SENSOR_LOG_PATH_UNIT)
     postprocessing.gateway_with_top_sensors(TOP_N_SENSORS, sensor_set, gateway_set, GATEWAY_LOG_PATH_UNIT)
 
-    # __Denormalizing___
+    # ___Denormalizing___
     postprocessing.denormalize_locations(sensor_set, gateway_set, GRID_SIZE, extreme_longitude, extreme_latitude)
     postprocessing.record_nodes(sensor_set, SENSOR_LOG_PATH_COOR)
     postprocessing.gateway_with_top_sensors(TOP_N_SENSORS, sensor_set, gateway_set, GATEWAY_LOG_PATH_COOR)
