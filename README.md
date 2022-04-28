@@ -1,4 +1,4 @@
-# Gateway Placement with Mixed-Integer Programming (gp-mip)
+# Gateway Placement with Mixed-Integer Programming
 
 `gp-mip` is a package written in order to solve the Gateway Placement Problem by approaching it under the concept of Mixed-Integer Programming. In this documentation, libraries of the package will be introduced, and an example execution will be presented.
 
