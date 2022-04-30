@@ -48,5 +48,3 @@ In `gp-mip`, output data is given in three different ways. Since the model is bu
   - `img/n_km_coverage_grid.png` : Visual output of the sensor network and the gateway locations
   - `log_coor/n_km_coverage_gateways_coor.txt` : Geographical data of gateway locations
   - `log_unit/n_km_coverage_gateways_unit.txt` : Integer-based data of gateway locations
-
-<img align="center" width="60%" src="https://github.com/canbatuhan/gp-mip/blob/main/docs/output/img/top_30_sensors/10_km_coverage_grid.png?raw=true">
