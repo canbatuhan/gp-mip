@@ -50,5 +50,6 @@ In `gp-mip`, output data is given in three different ways. Since the model is bu
   - `log_unit/n_km_coverage_gateways_unit.txt` : Integer-based data of gateway locations
 
 <p align="center">
-  <img src="https://github.com/canbatuhan/gp-mip/blob/main/docs/output/img/top_30_sensors/10_km_coverage_grid.png?raw=true" width=360 height=360>
+  <img src="https://github.com/canbatuhan/gp-mip/blob/main/docs/output/img/top_30_sensors/10_km_coverage_grid.png?raw=true" width=640 height=640>
+  <img src="https://github.com/canbatuhan/gp-mip/blob/main/docs/output/img/_sensor_placement.png?raw=true" width=640 height=640>
 </p>
