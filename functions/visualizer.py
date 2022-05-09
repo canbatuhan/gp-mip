@@ -25,31 +25,42 @@ def generate_circle(center:tuple, radius:int) -> tuple:
     return x_data, y_data
 
 
-def show_locations(node_type:str, node_set:set, grid:Grid, file_path:str) -> None:
+def show_sensor_locations(top_n:int, sensor_set:set, grid:Grid, file_path:str) -> None:
     """
         Description:
             Visualizes the nodes on the generated grid
             and saves the figure
     
         Arguments:
-            - node_type : `str` type of the node
-            - node_set : `set` set storing the nodes
+            - top_n : `int` number of sensors to take
+            - sensor_set : `set` set storing the nodes
             - grid : `Grid` grid that the nodes are located on
             - file_path : `str` file to save figure into 
     """
     plt.figure(figsize=(9, 9))
-    plt.title("{} Locations on Grid".format(node_type))
+    plt.title("Sensor Locations")
     plt.xlim(left=0-int(grid.get_width()*0.1), right=int(grid.get_width()*1.1))
     plt.ylim(bottom=0-int(grid.get_height()*0.1), top=int(grid.get_height()*1.1))
 
-    x_locations, y_locations = list(), list()
-    for node in node_set:
-        x_locations.append(node.get_x())
-        y_locations.append(node.get_y())
+    sensor_x_data, sensor_y_data = list(), list()
+    for sensor in sensor_set:
+        sensor_x_data.append(sensor.get_x())
+        sensor_y_data.append(sensor.get_y())
+
+    hot_sensor_x_data, hot_sensor_y_data = list(), list()
+    for hot_sensor in helpers.get_top_sensors(sensor_set, top_n):
+        hot_sensor_x_data.append(hot_sensor.get_x())
+        hot_sensor_y_data.append(hot_sensor.get_y())
 
     plt.scatter(
-        x_locations, y_locations,
-        label=node_type, alpha=0.9)
+        sensor_x_data, sensor_y_data,
+        label="Sensors", marker='x',
+        s=20, color="darkorange", alpha=0.9)
+
+    plt.scatter(
+        hot_sensor_x_data, hot_sensor_y_data,
+        label="Top {} Sensor".format(top_n), marker="x",
+        s=20, color='red')
         
     plt.legend()
     plt.savefig(file_path)
@@ -57,7 +68,7 @@ def show_locations(node_type:str, node_set:set, grid:Grid, file_path:str) -> Non
     plt.close()
 
 
-def show_grid(top_n:int, sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:float, file_path:str) -> None:
+def show_gateway_placements(top_n:int, sensor_set:set, gateway_set:set, grid:Grid, distance_threshold:float, file_path:str) -> None:
     """
         Description:
             Visualizes the sensors and gateways on the same grid
@@ -104,15 +115,18 @@ def show_grid(top_n:int, sensor_set:set, gateway_set:set, grid:Grid, distance_th
 
     plt.scatter(
         gateway_x_data, gateway_y_data,
-        label="Gateways", marker='o', s=50)
+        label="Gateways", marker='o',
+        s=50, color="royalblue", alpha=0.9)
 
     plt.scatter(
         sensor_x_data, sensor_y_data,
-        label="Sensors", marker='x', s=20)
+        label="Sensors", marker='x',
+        s=20, color="darkorange", alpha=0.9)
 
     plt.scatter(
         hot_sensor_x_data, hot_sensor_y_data,
-        label="Sensors on Fire!", marker="x", s=20, color='red')
+        label="Top {} Sensor".format(top_n), marker="x",
+        s=20, color='red')
 
     for gateway in gateway_set:
         for sensor in sensor_set:

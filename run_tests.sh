@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "----------------------------------------------------------"
-echo "Clustering with Integer Linear Programming"
+echo "Clustering with Mixed-Integer Programming"
 echo "Unit Distance in the Grid ~ 1.17 km"
 echo "----------------------------------------------------------"
 echo ""
@@ -15,8 +15,8 @@ do
     do
         echo "----------------------------------------------------------"
         echo "Model is running for the following parameters"
-        echo "coverage distance = $DISTANCE_THRESHOLD km"
-        echo "considering top $TOP_N_SENSORS sensors"
+        echo "Coverage Distance = $DISTANCE_THRESHOLD kilometers"
+        echo "Considering the Top $TOP_N_SENSORS Sensors"
         echo "----------------------------------------------------------"
         python main.py --distance_threshold=$DISTANCE_THRESHOLD --top_n_sensors=$TOP_N_SENSORS
         echo ""
