@@ -45,11 +45,11 @@ In the given example, there are two input data. With input data, program is able
 
 In `gp-mip`, output data is given in three different ways. Since the model is built within the Mixed-Integer Programming concept. The input data is transformed into a integer-based form, by mapping the geograhical location data to a integer in range (0,n). Afterwards, the model run on a nxn grid. At the end of the optimization, result of the model represents the location of the gateways. These data is used to visualize the sensor network and determined locations of gateway. Lastly, this output data is logged as integers, then re-transformed into a geographical location data and logged again. Therefore there are three different output of the program.
 
-  - `img/n_km_coverage_grid.png` : Visual output of the sensor network and the gateway locations
-  - `log_coor/n_km_coverage_gateways_coor.txt` : Geographical data of gateway locations
-  - `log_unit/n_km_coverage_gateways_unit.txt` : Integer-based data of gateway locations
+  - `docs/output/gateway_placement_visulizations/top_n_sensors/k_km_coverage_gateway_placements.png` : Visual output of the sensor network and the gateway locations
+  - `docs/output/gateway_placements_coordinates/top_n_sensors/k_km_coverage_gateway_placements.txt` : Geographical data of gateway locations
+  - `docs/output/gateway_placements_units/top_n_sensors/k_km_coverage_gateway_placements.txt` : Integer-based data of gateway locations
 
 <p align="center">
-  <img style="display:inline-block;" src="https://github.com/canbatuhan/gp-mip/blob/main/docs/output/gateway_placements_visualization/top_30_sensors/10_km_coverage_grid.png?raw=true" width=360 height=360>
-  <img style="display:inline-block;" src="https://github.com/canbatuhan/gp-mip/blob/main/docs/output/gateway_placements_visualization/_sensor_placement.png?raw=true" width=360 height=360>
+  <img style="display:inline-block;" src="https://github.com/canbatuhan/gp-mip/blob/main/docs/output/gateway_placements_visualizations/top_30_sensors/10_km_coverage_gateway_placements.png?raw=true" width=360 height=360>
+  <img style="display:inline-block;" src="https://github.com/canbatuhan/gp-mip/blob/main/docs/output/gateway_placements_visualizations/_sensor_locations.png?raw=true" width=360 height=360>
 </p>
