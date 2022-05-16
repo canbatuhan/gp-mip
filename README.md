@@ -50,6 +50,6 @@ In `gp-mip`, output data is given in three different ways. Since the model is bu
   - Integer-based data of gateway locations
 
 <p align="center">
-  <img style="display:inline-block;" src="https://github.com/canbatuhan/gp-mip/blob/main/docs/output/gateway_placements_visualizations/top_30_sensors/10_km_coverage_gateway_placements.png?raw=true" width=360 height=360>
-  <img style="display:inline-block;" src="https://github.com/canbatuhan/gp-mip/blob/main/docs/output/gateway_placements_visualizations/_sensor_locations.png?raw=true" width=360 height=360>
+  <img style="display:inline-block;" src="https://github.com/canbatuhan/gp-mip/blob/main/docs/output/visualizations/top_30_sensors/10_km_coverage_gateway_placements.png?raw=true" width=360 height=360>
+  <img style="display:inline-block;" src="https://github.com/canbatuhan/gp-mip/blob/main/docs/output/visualizations/_sensor_locations.png?raw=true" width=360 height=360>
 </p>
