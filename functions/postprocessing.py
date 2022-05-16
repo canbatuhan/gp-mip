@@ -1,3 +1,4 @@
+import csv
 from . import helpers
 
 
@@ -14,7 +15,7 @@ def connect_nodes(sensor_set:set, gateway_set:set, distance_threshold:float) -> 
             between nodes so that can communicate
     """
     for sensor in sensor_set:
-        sensor.find_covered_gateways(gateway_set, distance_threshold)
+        sensor.find_covering_gateway(gateway_set, distance_threshold)
     
     for gateway in gateway_set:
         gateway.find_covered_sensors(sensor_set, distance_threshold)
@@ -72,20 +73,19 @@ def set_gateway_elevations(gateway_set:set) -> None:
         gateway.set_z(avg_elevation)
 
 
-def record_sensor_locations(node_set:set, file_path:str) -> None:
+def record_sensor_locations(sensor_set:set, file_path:str) -> None:
     """
         Description:
             Records the node locations for further use
 
         Arguments:
-            - node_type : `str` type of the node
-            - node_set : `set` set storing the nodes
+            - sensor_set : `set` set storing the nodes
             - file_path : `str` file to write into 
     """
     with open(file_path, 'w') as file:
-        for node in node_set:
+        for sensor in sensor_set:
             file.write('{}\t{}\t{}\t{}\n'.format(
-                node.get_id(), node.get_y(), node.get_x(), node.get_z()))
+                sensor.get_id(), sensor.get_y(), sensor.get_x(), sensor.get_z()))
 
 
 def record_gateway_placements(top_n:int, sensor_set:set, gateway_set:set, file_path:str) -> None:
@@ -100,7 +100,6 @@ def record_gateway_placements(top_n:int, sensor_set:set, gateway_set:set, file_p
             - gateway_set : `set` set storing `Gateway` objects
             - file_path : `str` file to write into
     """
-
     top_sensors = helpers.get_top_sensors(sensor_set, top_n)
 
     with open(file_path, 'w') as file:
@@ -110,3 +109,40 @@ def record_gateway_placements(top_n:int, sensor_set:set, gateway_set:set, file_p
                     file.write('{}\t{}\t{}\t{}\n'.format(
                         gateway.get_id(), gateway.get_y(), gateway.get_x(), gateway.get_z()))
                     break
+                
+
+def sensor_locations_loraplan(sensor_set:set, file_path:str):
+    """
+        Description:
+            Records the node locations for further use
+
+        Arguments:
+            - sensor_set : `set` set storing the sensors
+            - file_path : `str` file to write into 
+    """
+    with open(file_path, 'w', newline='') as file:
+        writer = csv.writer(file, delimiter=';')
+        writer.writerow(['lat', 'lon', 'number_sensors'])
+
+        for sensor in sensor_set:
+            writer.writerow([
+                sensor.get_y(), sensor.get_x(), 1.0])
+
+
+def gateway_placements_loraplan(gateway_set:set, file_path:str):
+    """
+        Description:
+            Records the node locations for further use
+
+        Arguments:
+            - gateway_set : `set` set storing the gateways
+            - file_path : `str` file to write into 
+    """
+    with open(file_path, 'w', newline='') as file:
+        writer = csv.writer(file, delimiter=';')
+        writer.writerow([
+            'id', 'x', 'y', 'height', 'environment'])
+
+        for gateway in gateway_set:
+            writer.writerow([
+                gateway.get_id(), gateway.get_y(), gateway.get_x(), gateway.get_z(), 'urban'])

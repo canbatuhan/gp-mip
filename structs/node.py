@@ -64,11 +64,13 @@ class Sensor(Node):
         super().__init__(id, x, y, z)
         self.__score = score
 
-    def find_covered_gateways(self, gateway_set:set, distance_threshold:float) -> None:
+    def find_covering_gateway(self, gateway_set:set, distance_threshold:float) -> None:
         self.find_covered_nodes(gateway_set, distance_threshold)
 
-    def get_covered_gateways(self) -> set:
-        return self.get_covered_nodes()
+    def get_covering_gateway(self) -> set:
+        gateway = self.get_covered_nodes().pop()
+        self.get_covered_nodes().add(gateway)
+        return gateway
 
     def get_score(self) -> float:
         return self.__score

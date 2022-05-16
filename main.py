@@ -61,3 +61,8 @@ if __name__=='__main__':
     
     file_path = ALL_GATEWAY_PLACEMENTS_COOR_PATH(DISTANCE_THRESHOLD_KM)
     postprocessing.record_gateway_placements(len(sensor_set), sensor_set, gateway_set, file_path)
+
+
+    # ___LoraPlan-Format___
+    postprocessing.sensor_locations_loraplan(sensor_set, LORAPLAN_SENSOR_LOCATIONS)
+    postprocessing.gateway_placements_loraplan(gateway_set, LORAPLAN_GATEWAY_PLACEMENTS(DISTANCE_THRESHOLD_KM))
