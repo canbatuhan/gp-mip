@@ -25,14 +25,13 @@ def generate_circle(center:tuple, radius:int) -> tuple:
     return x_data, y_data
 
 
-def show_sensor_locations(top_n:int, sensor_set:set, grid:Grid, file_path:str) -> None:
+def show_sensor_locations(sensor_set:set, grid:Grid, file_path:str) -> None:
     """
         Description:
             Visualizes the nodes on the generated grid
             and saves the figure
     
         Arguments:
-            - top_n : `int` number of sensors to take
             - sensor_set : `set` set storing the nodes
             - grid : `Grid` grid that the nodes are located on
             - file_path : `str` file to save figure into 
@@ -46,21 +45,11 @@ def show_sensor_locations(top_n:int, sensor_set:set, grid:Grid, file_path:str) -
     for sensor in sensor_set:
         sensor_x_data.append(sensor.get_x())
         sensor_y_data.append(sensor.get_y())
-
-    hot_sensor_x_data, hot_sensor_y_data = list(), list()
-    for hot_sensor in helpers.get_top_sensors(sensor_set, top_n):
-        hot_sensor_x_data.append(hot_sensor.get_x())
-        hot_sensor_y_data.append(hot_sensor.get_y())
-
+        
     plt.scatter(
         sensor_x_data, sensor_y_data,
         label="Sensors", marker='x',
         s=20, color="darkorange", alpha=0.9)
-
-    plt.scatter(
-        hot_sensor_x_data, hot_sensor_y_data,
-        label="Top {} Sensor".format(top_n), marker="x",
-        s=20, color='red')
         
     plt.legend()
     plt.savefig(file_path)

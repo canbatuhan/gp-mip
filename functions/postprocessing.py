@@ -72,7 +72,7 @@ def set_gateway_elevations(gateway_set:set) -> None:
         gateway.set_z(avg_elevation)
 
 
-def record_nodes(node_set:set, file_path:str) -> None:
+def record_sensor_locations(node_set:set, file_path:str) -> None:
     """
         Description:
             Records the node locations for further use
@@ -82,30 +82,13 @@ def record_nodes(node_set:set, file_path:str) -> None:
             - node_set : `set` set storing the nodes
             - file_path : `str` file to write into 
     """
-    SECONDS_DELIMITER = '"'
-    MINUTES_DELIMITER = '\''
-    DEGREES_DELIMITER = 'Â°' # in Windows
-    #DEGREES_DELIMITER = '°' # in Linux
-
     with open(file_path, 'w') as file:
         for node in node_set:
-            latitude = helpers.convert_to_coordinate(
-                raw_data=node.get_y(),
-                sec_delim=SECONDS_DELIMITER,
-                min_delim=MINUTES_DELIMITER,
-                deg_delim=DEGREES_DELIMITER)
-
-            longitude = helpers.convert_to_coordinate(
-                raw_data=node.get_x(),
-                sec_delim=SECONDS_DELIMITER,
-                min_delim=MINUTES_DELIMITER,
-                deg_delim=DEGREES_DELIMITER)
-            
             file.write('{}\t{}\t{}\t{}\n'.format(
                 node.get_id(), node.get_y(), node.get_x(), node.get_z()))
 
 
-def gateway_with_top_sensors( top_n:int, sensor_set:set, gateway_set:set, file_path:str) -> None:
+def record_gateway_placements(top_n:int, sensor_set:set, gateway_set:set, file_path:str) -> None:
     """
         Description:
             Records the gateways covering the top `n`
