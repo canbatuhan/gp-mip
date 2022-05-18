@@ -145,4 +145,4 @@ def gateway_placements_loraplan(gateway_set:set, file_path:str):
 
         for gateway in gateway_set:
             writer.writerow([
-                gateway.get_id(), gateway.get_y(), gateway.get_x(), gateway.get_z(), 'urban'])
+                gateway.get_id(), gateway.get_y(), gateway.get_x(), gateway.get_z(), 'rural'])
