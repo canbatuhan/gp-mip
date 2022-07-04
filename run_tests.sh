@@ -14,7 +14,8 @@ do
     echo "Model is running for the following parameters"
     echo "Coverage Distance = $DISTANCE_THRESHOLD kilometers"
     echo "----------------------------------------------------------"
-    python main.py --distance_threshold=$DISTANCE_THRESHOLD
+    python main.py --distance_threshold=$DISTANCE_THRESHOLD &
+    python base.py --distance_threshold=$DISTANCE_THRESHOLD &
     echo ""
 
     DISTANCE_THRESHOLD=$((DISTANCE_THRESHOLD+1))

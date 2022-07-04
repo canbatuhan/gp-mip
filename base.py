@@ -1,9 +1,9 @@
 import argparse
 import math
 
-from structs import Grid
-from functions import preprocessing, clustering, postprocessing, visualizer
-from main_settings import * # Importing File paths
+from structs import Grid, Gateway
+from functions import helpers, preprocessing, postprocessing, visualizer
+from base_settings import * # Importing File paths
 
 parser = argparse.ArgumentParser(description='ILP Sensor Clustering - Clustering of sensors using Integer Linear Programming concept')
 parser.add_argument('--grid_size', required=False, default=100, type=int)
@@ -28,9 +28,10 @@ if __name__=='__main__':
 
 
     # ___Optimization___
-    generated_model, gateway_locations = clustering.generate_model(grid)
-    developed_model = clustering.develop_model(generated_model, grid, sensor_set, gateway_locations, DISTANCE_THRESHOLD, SCORE_THRESHOLD)
-    gateway_set = clustering.optimize_model(developed_model, grid, gateway_locations)
+    top_sensor_set = helpers.get_top_sensors(sensor_set, 30)
+    gateway_set = set()
+    for idx, sensor in enumerate(top_sensor_set):
+        gateway_set.add(Gateway(idx, sensor.get_x(), sensor.get_y(), sensor.get_z()))
     
 
     # ___Visualization___
