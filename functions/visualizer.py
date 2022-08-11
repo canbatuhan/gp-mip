@@ -127,7 +127,7 @@ def show_gateway_placements(top_n:int, sensor_set:set, gateway_set:set, grid:Gri
 
                 plt.plot(
                     x_data, y_data,
-                    color="g", alpha=sensor.get_score()*1.5,
+                    color="g", alpha=0.8,
                     linestyle='-', linewidth=1)
             
     plt.legend()

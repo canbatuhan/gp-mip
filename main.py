@@ -1,5 +1,6 @@
 import argparse
 import math
+import numpy as np
 
 from structs import Grid
 from functions import preprocessing, clustering, postprocessing, visualizer
@@ -12,10 +13,10 @@ parser.add_argument('--score_threshold', required=False, default=0.15, type=floa
 
 # Parsing Arguments
 args = vars(parser.parse_args())
-MAX_DISTANCE = 203.02 # km # math.sqrt((extreme_longitude[0]-extreme_longitude[1])**2 + (extreme_latitude[0]-extreme_latitude[1])**2)
+MAX_DISTANCE = 157 # km # print(extreme_longitude, extreme_latitude) -> calculated
 GRID_SIZE = args['grid_size']
 DISTANCE_THRESHOLD_KM = args['distance_threshold']
-DISTANCE_THRESHOLD = args['distance_threshold']/(MAX_DISTANCE/(GRID_SIZE*math.sqrt(2))) # km to unit distance
+DISTANCE_THRESHOLD = args['distance_threshold']/(MAX_DISTANCE/(GRID_SIZE*math.sqrt(2))) # km to unit distance # a.sqrt(2) = min_long, min_lat <-> max_long, max_long = 1,72'
 SCORE_THRESHOLD = args['score_threshold']
 
 # Main Program

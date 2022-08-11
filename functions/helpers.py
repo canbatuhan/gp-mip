@@ -132,4 +132,3 @@ def convert_to_coordinate(raw_data:float, sec_delim:str, min_delim:str, deg_deli
     seconds_float = (minutes_float-minutes)*60
     seconds = round(seconds_float, 1)
     return str(degrees) + deg_delim + str(minutes) + min_delim + str(seconds) + sec_delim
-    

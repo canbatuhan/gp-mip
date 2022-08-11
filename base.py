@@ -2,7 +2,7 @@ import argparse
 import math
 
 from structs import Grid, Gateway
-from functions import helpers, preprocessing, postprocessing, visualizer
+from functions import helpers, manual, preprocessing, postprocessing, visualizer
 from base_settings import * # Importing File paths
 
 parser = argparse.ArgumentParser(description='ILP Sensor Clustering - Clustering of sensors using Integer Linear Programming concept')
@@ -12,7 +12,7 @@ parser.add_argument('--score_threshold', required=False, default=0.15, type=floa
 
 # Parsing Arguments
 args = vars(parser.parse_args())
-MAX_DISTANCE = 203.02 # km # math.sqrt((extreme_longitude[0]-extreme_longitude[1])**2 + (extreme_latitude[0]-extreme_latitude[1])**2)
+MAX_DISTANCE = 157 # km
 GRID_SIZE = args['grid_size']
 DISTANCE_THRESHOLD_KM = args['distance_threshold']
 DISTANCE_THRESHOLD = args['distance_threshold']/(MAX_DISTANCE/(GRID_SIZE*math.sqrt(2))) # km to unit distance
@@ -32,7 +32,7 @@ if __name__=='__main__':
     gateway_set = set()
     for idx, sensor in enumerate(top_sensor_set):
         gateway_set.add(Gateway(idx, sensor.get_x(), sensor.get_y(), sensor.get_z()))
-    
+    gateway_set = manual.add_manually(gateway_set, DISTANCE_THRESHOLD_KM)
 
     # ___Visualization___
     visualizer.show_sensor_locations(sensor_set, grid, SENSOR_LOCATIONS_PATH)
